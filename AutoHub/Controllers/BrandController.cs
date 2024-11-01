@@ -41,5 +41,25 @@ namespace AutoHub.Controllers
 
             return this.RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public IActionResult Details(string id) 
+        {
+            bool isIdValid = Guid.TryParse(id, out Guid guidId);
+            if (!isIdValid) 
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            Brand? brand = this.dbContext
+                .Brands.FirstOrDefault(b => b.Id == guidId);
+
+            if (brand == null) 
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return this.View(brand);
+        }
     }
 }
