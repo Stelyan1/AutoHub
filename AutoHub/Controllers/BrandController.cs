@@ -32,7 +32,14 @@ namespace AutoHub.Controllers
         [HttpPost]
         public IActionResult Create(Brand brand) 
         {
-            return View(brand);
+            if (!ModelState.IsValid) 
+            {
+                return View(brand);
+            }
+            this.dbContext.Brands.Add(brand);
+            this.dbContext.SaveChanges();
+
+            return this.RedirectToAction(nameof(Index));
         }
     }
 }
