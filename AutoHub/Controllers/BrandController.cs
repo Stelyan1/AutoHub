@@ -2,6 +2,7 @@
 using AutoHub.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace AutoHub.Controllers
 {
     public class BrandController : Controller
@@ -32,10 +33,11 @@ namespace AutoHub.Controllers
         [HttpPost]
         public IActionResult Create(Brand brand) 
         {
-            if (!ModelState.IsValid) 
+            if (!this.ModelState.IsValid) 
             {
                 return View(brand);
             }
+
             this.dbContext.Brands.Add(brand);
             this.dbContext.SaveChanges();
 
