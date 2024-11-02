@@ -1,5 +1,5 @@
-﻿@using AutoHub.Data.Models
-@model Brand
+﻿@using AutoHub.Web.ViewModels.Models
+@model BrandViewModel
 
 <h2>Add a New Brand</h2>
 
@@ -7,27 +7,27 @@
     <div>
         <label for="Name">Brand Name</label>
         <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name"></span>
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div>
         <label for="Founded by">Founded By</label>
         <input asp-for="FoundedBy" class="form-control" />
-        <span asp-validation-for="FoundedBy"></span>
+        <span asp-validation-for="FoundedBy" class="text-danger"></span>
     </div>
     <div>
         <label for="FoundedDate">FoundedDate</label>
-        <input asp-for="FoundedDate" type="date" class="form-control" />
-        <span asp-validation-for="FoundedDate"></span>
+        <input asp-for="FoundedDate" class="form-control" />
+        <span asp-validation-for="FoundedDate" class="text-danger"></span>
     </div>
     <div>
         <label for="Description">Description</label>
         <input asp-for="Description" class="form-control" />
-        <span asp-validation-for="Description"></span>
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div>
         <label for="ImageUrl">ImageUrl</label>
         <input asp-for="ImageUrl" class="form-control" />
-        <span asp-validation-for="ImageUrl"></span>
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary mt-2">Create Brand</button>
 </form>

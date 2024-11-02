@@ -1,6 +1,8 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
+using AutoHub.Web.ViewModels.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace AutoHub.Controllers
 {
@@ -30,12 +32,33 @@ namespace AutoHub.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Brand brand) 
+        public IActionResult Create(BrandViewModel brandModel) 
         {
             if (!ModelState.IsValid) 
             {
-                return View(brand);
+                return View(brandModel);
             }
+
+            bool isFoundedDateValid = DateTime
+                 .TryParseExact(brandModel.FoundedDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None,
+                 out DateTime foundedDate);
+
+            if (!isFoundedDateValid)
+            {
+                this.ModelState.AddModelError(nameof(brandModel.FoundedDate), "The date founded must be the following format MM/dd/yyyy");
+                return this.View(brandModel);
+            }
+
+            Brand brand = new Brand()
+            {
+                Name = brandModel.Name,
+                FoundedBy = brandModel.FoundedBy,
+                FoundedDate = foundedDate,
+                Description = brandModel.Description,
+                ImageUrl = brandModel.ImageUrl
+            };
+
+
             this.dbContext.Brands.Add(brand);
             this.dbContext.SaveChanges();
 
