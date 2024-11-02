@@ -10,7 +10,6 @@ namespace AutoHub.Data.Models
             this.Id = Guid.NewGuid();
         }
 
-
         [Comment("Identifier of the brand")]
         public Guid Id { get; set; }
 
@@ -27,5 +26,8 @@ namespace AutoHub.Data.Models
 
         public string ImageUrl { get; set; } = null!;
 
+        [Comment("One brand can have many models")]
+        public virtual ICollection<Model> Models { get; set; } 
+            = new HashSet<Model>();
     }
 }
