@@ -50,6 +50,29 @@ namespace AutoHub.Data.Configuration
 
             builder.Property(m => m.ImageUrl)
                    .IsRequired();
+
+            builder.HasData(this.SeedModels());
+        }
+
+        private IEnumerable<Model> SeedModels() 
+        {
+            IEnumerable<Model> models = new List<Model>() 
+            {
+                new Model()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "BMW 340i Sedan",
+                    Year = 2016,
+                    HorsePower = 320,
+                    FuelType = "Petrol",
+                    GasConsumption = 7.2,
+                    Description = "The BMW 340i Sedan offers a powerful engine, refined handling, and luxury features.",
+                    ImageUrl = "https://i.pinimg.com/736x/ef/06/9e/ef069ec0aecb59c7858a19508b691b85.jpg",
+                    BrandId = new Guid("C5BFF384-4440-480A-B62F-E544EA4B8B05")
+                }
+            };
+
+            return models;
         }
     }
 }
