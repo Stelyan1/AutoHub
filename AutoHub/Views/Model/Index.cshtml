@@ -1,0 +1,26 @@
+﻿@using AutoHub.Data.Models
+@model IEnumerable<AutoHub.Data.Models.Model>
+
+<h2 class="text-center">All Models</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (Model models in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    <img src="@models.ImageUrl" alt="@models.Name" class="card-img-top" style="max-height: 200px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@models.Name</h5>
+                        <a href="@Url.Action("Details", "Models", new { id = models.Id })" class="btn btn-primary">Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<a asp-action="Create" class="btn btn-primary">Add New Brand</a>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
