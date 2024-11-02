@@ -8,27 +8,28 @@ using System.Threading.Tasks;
 namespace AutoHub.Web.ViewModels.Models
 {
     using static AutoHub.Common.EntityValidationConstants.Brand;
+    using static AutoHub.Common.BrandModelErrorMessages.Brand;
     public class BrandViewModel
     {
-        [Required]
+        [Required(ErrorMessage = BrandNameIsRequired)]
         [MinLength(BrandNameMinLength)]
         [MaxLength(BrandNameMaxLength)]
         public string Name { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = FounderIsRequired)]
         [MinLength(FounderMinLength)]
         [MaxLength(FounderMaxLength)]
         public string FoundedBy { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = FoundedDateIsRequired)]
         public string FoundedDate { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = DescriptionIsRequired)]
         [MinLength(DescriptionMinLength)]
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = ImageIsRequired)]
         public string ImageUrl  { get; set; } = null!;
     }
 }

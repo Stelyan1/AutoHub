@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AutoHub.Data.Models\AutoHub.Data.Models.csproj" />
+  </ItemGroup>
+
 </Project>
