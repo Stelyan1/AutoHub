@@ -22,5 +22,26 @@ namespace AutoHub.Controllers
 
             return View(allModels);
         }
+
+        [HttpGet]
+        public IActionResult Details(string id) 
+        {
+            bool isValid = Guid.TryParse(id, out Guid guidId);
+            if (!isValid) 
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            Model? model = this.dbContext
+                .Models.FirstOrDefault(m => m.Id == guidId);
+
+            if (model == null) 
+            {
+                return RedirectToAction(nameof(Index));
+            }
+                
+                
+            return this.View(model);
+        }
     }
 }

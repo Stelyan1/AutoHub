@@ -12,7 +12,7 @@
                     <img src="@models.ImageUrl" alt="@models.Name" class="card-img-top" style="max-height: 200px; object-fit: cover;" />
                     <div class="card-body">
                         <h5 class="card-title">@models.Name</h5>
-                        <a href="@Url.Action("Details", "Models", new { id = models.Id })" class="btn btn-primary">Details</a>
+                        <a href="@Url.Action("Details", "Model", new { id = models.Id })" class="btn btn-primary">Details</a>
                     </div>
                 </div>
             </div>
@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<a asp-action="Create" class="btn btn-primary">Add New Brand</a>
+<a asp-action="Create" class="btn btn-primary">Add New Model</a>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

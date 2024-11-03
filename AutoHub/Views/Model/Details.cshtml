@@ -1,0 +1,30 @@
+﻿@using AutoHub.Data.Models
+@model Model
+
+<div class="container mt-4">
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card border-0">
+                <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid" style="max-width: 100%; height: min-content;">
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-8">
+            <div class="card p-5">
+                <h2 class="text-center">@Model.Name</h2>
+                
+                <p><strong>Description:</strong> @Model.Description</p>
+                <p><strong>Year:</strong> @Model.Year</p>
+                <p><strong>Horsepower:</strong> @Model.HorsePower HP</p>
+                <p><strong>Fuel Type:</strong> @Model.FuelType</p>
+                <p><strong>Gas Consumption:</strong> @Model.GasConsumption L/100km</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-primary">Back to All Models</a>
