@@ -29,5 +29,9 @@ namespace AutoHub.Data.Models
         [Comment("One brand can have many models")]
         public virtual ICollection<Model> Models { get; set; } 
             = new HashSet<Model>();
+
+        [Comment("Every Brand have an engine they manufactured")]
+        public virtual ICollection<Engine> Engines { get; set; } 
+            = new HashSet<Engine>();
     }
 }

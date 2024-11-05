@@ -42,5 +42,12 @@ namespace AutoHub.Data.Models
         [Comment("Foreign Key to Brand one model can have one brand")]
         public Guid BrandId { get; set; }
         public virtual Brand Brand { get; set; } = null!;
+
+        [Comment("Every Model has engine which belongs to it")]
+        public virtual ICollection<Engine> Engines { get; set; } 
+            = new HashSet<Engine>();
+
+
+        //Later add two props that model can have engine and it will become many to many.
     }
 }
