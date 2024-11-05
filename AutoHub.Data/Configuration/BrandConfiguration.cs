@@ -50,7 +50,7 @@ namespace AutoHub.Data.Configuration
                     Description = "Automobili Lamborghini is an Italian manufacturer of luxury sports cars and SUVs based in Sant'Agata Bolognese. The company is owned by the Volkswagen Group through its subsidiary Audi.",
                     FoundedBy = "Ferruccio Lamborghini",
                     FoundedDate = new DateTime(1963, 05, 07),
-                    ImageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FLamborghini&psig=AOvVaw3CXwortwq3tXlmsmsiEvwG&ust=1730511694438000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJDv_MiAuokDFQAAAAAdAAAAABAE"
+                    ImageUrl = "https://www.brandcrowd.com/blog/wp-content/uploads/2023/05/Lamborghini-logo-1-1024x819.jpg"
                 }
             };
 

@@ -4,6 +4,7 @@ using AutoHub.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoHub.Data.Migrations
 {
     [DbContext(typeof(AutoHubDbContext))]
-    partial class AutoHubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241105150416_EngineAdded")]
+    partial class EngineAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,7 +64,7 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8b1c8b74-e13b-4dd6-ac6e-8692c57e6fe0"),
+                            Id = new Guid("21a8df08-1b29-4419-a541-8fb7aca3daa8"),
                             Description = "Automobili Lamborghini is an Italian manufacturer of luxury sports cars and SUVs based in Sant'Agata Bolognese. The company is owned by the Volkswagen Group through its subsidiary Audi.",
                             FoundedBy = "Ferruccio Lamborghini",
                             FoundedDate = new DateTime(1963, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -89,10 +92,6 @@ namespace AutoHub.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Image of engine");
-
-                    b.Property<Guid>("ModelId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("FK To VehicleModel");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -134,18 +133,15 @@ namespace AutoHub.Data.Migrations
 
                     b.HasIndex("BrandId");
 
-                    b.HasIndex("ModelId");
-
                     b.ToTable("Engines");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8f228c64-39b2-4f28-824a-4aacec167362"),
+                            Id = new Guid("0ac19290-486f-41d5-9d78-c4953dc37ec4"),
                             BrandId = new Guid("c5bff384-4440-480a-b62f-e544ea4b8b05"),
                             Cylinders = 6,
                             ImageUrl = "https://fsc.codes/cdn/shop/articles/BMW-B58.jpg?v=1703197166",
-                            ModelId = new Guid("348de990-d33a-4271-a79e-2820bf517459"),
                             Name = "B58",
                             PowerOutput = "322-385hp",
                             Rpm = "7000",
@@ -209,7 +205,7 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9ab813d3-f098-4c7d-b821-c7f972dcee7a"),
+                            Id = new Guid("db8d32aa-5814-4755-b257-856a086e2974"),
                             BrandId = new Guid("c5bff384-4440-480a-b62f-e544ea4b8b05"),
                             Description = "The BMW 340i Sedan offers a powerful engine, refined handling, and luxury features.",
                             FuelType = "Petrol",
@@ -229,15 +225,7 @@ namespace AutoHub.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AutoHub.Data.Models.Model", "Model")
-                        .WithMany("Engines")
-                        .HasForeignKey("ModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Brand");
-
-                    b.Navigation("Model");
                 });
 
             modelBuilder.Entity("AutoHub.Data.Models.Model", b =>
@@ -256,11 +244,6 @@ namespace AutoHub.Data.Migrations
                     b.Navigation("Engines");
 
                     b.Navigation("Models");
-                });
-
-            modelBuilder.Entity("AutoHub.Data.Models.Model", b =>
-                {
-                    b.Navigation("Engines");
                 });
 #pragma warning restore 612, 618
         }

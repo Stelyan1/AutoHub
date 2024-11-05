@@ -22,15 +22,19 @@ namespace AutoHub.Data.Models
 
         [Comment("FK Manufacturer of engine")]
         public Guid BrandId { get; set; } 
-        public Brand Brand { get; set; } = null!;
+        public virtual Brand Brand { get; set; } = null!;
+
+        [Comment("FK To VehicleModel")]
+        public Guid ModelId { get; set; }
+        public virtual Model Model { get; set; } = null!;
 
         [Comment("Cylinder of engine")]
-        public string Cylinders { get; set; } = null!;
+        public int Cylinders { get; set; } 
 
         [Comment("Chain")]
         public string ValvetrainDriveSystem {  get; set; } = null!;
 
-        [Comment("Identifier of engine")]
+        [Comment("Horsepower of engine")]
         public string PowerOutput { get; set; } = null!;
 
         [Comment("Torque of engine")]
@@ -44,9 +48,5 @@ namespace AutoHub.Data.Models
 
         [Comment("Date started and ended of engine")]
         public string YearsProduction { get; set; } = null!;
-
-        [Comment("Foreign Key to model")]
-        public Guid ModelId { get; set; } 
-        public Model Model { get; set; } = null!;
     }
 }

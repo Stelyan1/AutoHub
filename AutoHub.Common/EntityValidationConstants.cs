@@ -25,5 +25,26 @@
             public const byte DescriptionMinLength = 10;
             public const int DescriptionMaxLength = 500;
         }
+
+        public static class Engine
+        {
+            public const byte EngineNameMinLength = 3;
+            public const byte EngineNameMaxLength = 40;
+
+            public const byte ValveTrainMinLength = 5;
+            public const byte ValveTrainMaxLength = 5;
+
+            public const byte PowerOutputMinLength = 6;
+            public const byte PowerOutputMaxLength = 20;
+
+            public const byte TorqueMinLength = 6;
+            public const byte TorqueMaxLength = 20;
+
+            public const byte RpmMinLength = 7;
+            public const byte RpmMaxLength = 20;
+
+            public const byte YearsProductionMinLength = 9;
+            public const byte YearsProductionMaxLength = 20;
+        }
     }
 }
