@@ -1,0 +1,67 @@
+﻿@using AutoHub.Web.ViewModels.Models
+@model EngineViewModel
+
+<h2>Add a New Engine</h2>
+
+<form asp-action="Create" method="post">
+    <div>
+        <label for="Name">Engine Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Manufacturer"></label>
+        @Html.DropDownListFor(model => model.Manufacturer,
+                 new SelectList(Model.Brands, "Id", "Name", Model.Manufacturer),
+                 "Select a manufacturer", new { @class = "form-control" })
+
+        <span asp-validation-for="Manufacturer"></span>
+    </div>
+    <div>
+        <label asp-for="Application"></label>
+        @Html.DropDownListFor(model => model.Application,
+                 new SelectList(Model.Models, "Id", "Name", Model.Application),
+                 "Select a model", new { @class = "form-control" })
+
+        <span asp-validation-for="Application"></span>
+    </div>
+    <div>
+        <label for="Cylinders">Cylinders</label>
+        <input asp-for="Cylinders" class="form-control" />
+        <span asp-validation-for="Cylinders" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="ValveTrainDriveSystem">ValveTrainDriveSystem</label>
+        <input asp-for="ValveTrainDriveSystem" class="form-control" />
+        <span asp-validation-for="ValveTrainDriveSystem" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="PowerOutput">PowerOutput</label>
+        <input asp-for="PowerOutput" class="form-control" />
+        <span asp-validation-for="PowerOutput" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Torque">Torque</label>
+        <input asp-for="Torque" class="form-control" />
+        <span asp-validation-for="Torque" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Rpm">Rpm</label>
+        <input asp-for="Rpm" class="form-control" />
+        <span asp-validation-for="Rpm" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="ImageUrl">ImageUrl</label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="YearsProduction">YearsProduction</label>
+        <input asp-for="YearsProduction" class="form-control" />
+        <span asp-validation-for="YearsProduction" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Create Engine</button>
+</form>
+
+<a asp-action="Index">Back to Engine List</a>
