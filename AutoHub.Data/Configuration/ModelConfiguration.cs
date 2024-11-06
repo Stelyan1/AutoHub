@@ -54,9 +54,9 @@ namespace AutoHub.Data.Configuration
             builder.HasData(this.SeedModels());
         }
 
-        private IEnumerable<Model> SeedModels() 
+        private IEnumerable<Model> SeedModels()
         {
-            IEnumerable<Model> models = new List<Model>() 
+            IEnumerable<Model> models = new List<Model>()
             {
                 new Model()
                 {
@@ -68,8 +68,34 @@ namespace AutoHub.Data.Configuration
                     GasConsumption = 7.2,
                     Description = "The BMW 340i Sedan offers a powerful engine, refined handling, and luxury features.",
                     ImageUrl = "https://i.pinimg.com/736x/ef/06/9e/ef069ec0aecb59c7858a19508b691b85.jpg",
-                    BrandId = new Guid("C5BFF384-4440-480A-B62F-E544EA4B8B05")
-                }
+                    BrandId = new Guid("148C36A7-5930-4CE3-8BB0-658FD772C423")
+                },
+
+                new Model()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Mercedes-Benz C63 AMG",
+                    Year = 2012,
+                    HorsePower = 487,
+                    FuelType = "Petrol",
+                    GasConsumption = 13.2,
+                    Description = "The output of the AMG 6.3-litre V8 engine is unchanged at 336 kW (457 hp) and can be increased to a maximum of 358 kW (487 hp) with the optional AMG Performance package. Agility, grip and ride comfort have been enhanced as a result of numerous measures to optimise the AMG sports suspension.",
+                    ImageUrl = "https://cdn.dealeraccelerate.com/bagauction/1/11/153/1920x1440/2012-mercedes-benz-c63-amg-black-series",
+                    BrandId = new Guid("C6D8E95B-D57F-4B15-BC7D-2F1AD38A17A9")
+                },
+
+                new Model()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Lamborghini Aventador ",
+                    Year = 2016,
+                    HorsePower = 770,
+                    FuelType = "Petrol",
+                    GasConsumption = 15.1,
+                    Description = "Lamborghini created the Aventador SVJ to embrace challenges head-on, combining cutting-edge technology with extraordinary design, while always refusing to compromise. In a future driven by technology, it’s easy to lose the genuine thrill of driving. But in the future shaped by Lamborghini, this won’t be left behind, because there will always be a driver behind the wheel. ",
+                    ImageUrl = "https://supercars.bg/wp-content/uploads/2018/08/Lamborghini-Aventador-SV-R-Nurburgring21.jpg",
+                    BrandId = new Guid("60CABA99-72AA-421A-A569-7CB41423A3EE")
+                },
             };
 
             return models;

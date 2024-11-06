@@ -51,7 +51,25 @@ namespace AutoHub.Data.Configuration
                     FoundedBy = "Ferruccio Lamborghini",
                     FoundedDate = new DateTime(1963, 05, 07),
                     ImageUrl = "https://www.brandcrowd.com/blog/wp-content/uploads/2023/05/Lamborghini-logo-1-1024x819.jpg"
-                }
+                },
+
+                new Brand()
+                {
+                    Name = "BMW",
+                    Description = "BMW is a German company with activities covering the production and sale of motor vehicles, spare parts and accessories for motor vehicles, engineering products, as well as related services.",
+                    FoundedBy = "Karl Rapp , Gustav Otto , Camillo Castiglioni , Franz Josef Pop",
+                    FoundedDate = new DateTime(1916, 03, 07),
+                    ImageUrl = "https://www.carmonkey.co.uk/images/logos/Bmw-logo.svg"
+                },
+
+                 new Brand()
+                {
+                    Name = "Mercedes-Benz",
+                    Description = "Mercedes-Benz is a trademark and a company of the same name - a manufacturer of premium cars, trucks, buses and other vehicles, which is part of the German concern \"Mercedes-Benz Group\". It is one of the most recognizable car brands in the world.",
+                    FoundedBy = "Karl Benz, Gottlieb Daimler, Wilhelm Maybach and Emil Jellinek",
+                    FoundedDate = new DateTime(1926, 06, 28),
+                    ImageUrl = "https://1000logos.net/wp-content/uploads/2018/04/Symbol-Mercedes-Benz.png"
+                },
             };
 
             return brands;

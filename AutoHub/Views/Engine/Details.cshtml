@@ -1,0 +1,33 @@
+﻿@using AutoHub.Data.Models
+@model Engine
+
+<div class="container mt-4">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card border-0">
+                <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid" style="max-width: 100%; height: min-content;">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-8">
+            <div class="card p-5">
+                <h2 class="text-center">@Model.Name</h2>
+
+                <p><strong>Brand:</strong> @Model.Brand.Name</p>
+                <p><strong>Application:</strong> @Model.Model.Name</p>
+                <p><strong>Cylinders:</strong> @Model.Cylinders</p>
+                <p><strong>ValveTrainDriveSystem:</strong> @Model.ValvetrainDriveSystem</p>
+                <p><strong>PowerOutput:</strong> @Model.PowerOutput</p>
+                <p><strong>Torque:</strong> @Model.Torque</p>
+                <p><strong>RPM:</strong> @Model.Rpm</p>
+                <p><strong>Years Produced:</strong> @Model.YearsProduction</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-primary">Back to All Engines</a>

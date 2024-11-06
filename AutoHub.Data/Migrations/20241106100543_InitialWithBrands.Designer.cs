@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoHub.Data.Migrations
 {
     [DbContext(typeof(AutoHubDbContext))]
-    [Migration("20241105150416_EngineAdded")]
-    partial class EngineAdded
+    [Migration("20241106100543_InitialWithBrands")]
+    partial class InitialWithBrands
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,12 +64,30 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("21a8df08-1b29-4419-a541-8fb7aca3daa8"),
+                            Id = new Guid("60caba99-72aa-421a-a569-7cb41423a3ee"),
                             Description = "Automobili Lamborghini is an Italian manufacturer of luxury sports cars and SUVs based in Sant'Agata Bolognese. The company is owned by the Volkswagen Group through its subsidiary Audi.",
                             FoundedBy = "Ferruccio Lamborghini",
                             FoundedDate = new DateTime(1963, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "https://www.brandcrowd.com/blog/wp-content/uploads/2023/05/Lamborghini-logo-1-1024x819.jpg",
                             Name = "Lamborghini"
+                        },
+                        new
+                        {
+                            Id = new Guid("148c36a7-5930-4ce3-8bb0-658fd772c423"),
+                            Description = "BMW is a German company with activities covering the production and sale of motor vehicles, spare parts and accessories for motor vehicles, engineering products, as well as related services.",
+                            FoundedBy = "Karl Rapp , Gustav Otto , Camillo Castiglioni , Franz Josef Pop",
+                            FoundedDate = new DateTime(1916, 3, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrl = "https://www.carmonkey.co.uk/images/logos/Bmw-logo.svg",
+                            Name = "BMW"
+                        },
+                        new
+                        {
+                            Id = new Guid("c6d8e95b-d57f-4b15-bc7d-2f1ad38a17a9"),
+                            Description = "Mercedes-Benz is a trademark and a company of the same name - a manufacturer of premium cars, trucks, buses and other vehicles, which is part of the German concern \"Mercedes-Benz Group\". It is one of the most recognizable car brands in the world.",
+                            FoundedBy = "Karl Benz, Gottlieb Daimler, Wilhelm Maybach and Emil Jellinek",
+                            FoundedDate = new DateTime(1926, 6, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrl = "https://1000logos.net/wp-content/uploads/2018/04/Symbol-Mercedes-Benz.png",
+                            Name = "Mercedes-Benz"
                         });
                 });
 
@@ -92,6 +110,10 @@ namespace AutoHub.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Image of engine");
+
+                    b.Property<Guid>("ModelId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("FK To VehicleModel");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -133,22 +155,9 @@ namespace AutoHub.Data.Migrations
 
                     b.HasIndex("BrandId");
 
-                    b.ToTable("Engines");
+                    b.HasIndex("ModelId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("0ac19290-486f-41d5-9d78-c4953dc37ec4"),
-                            BrandId = new Guid("c5bff384-4440-480a-b62f-e544ea4b8b05"),
-                            Cylinders = 6,
-                            ImageUrl = "https://fsc.codes/cdn/shop/articles/BMW-B58.jpg?v=1703197166",
-                            Name = "B58",
-                            PowerOutput = "322-385hp",
-                            Rpm = "7000",
-                            Torque = "450-500Nm",
-                            ValvetrainDriveSystem = "Chain",
-                            YearsProduction = "2015-Present"
-                        });
+                    b.ToTable("Engines");
                 });
 
             modelBuilder.Entity("AutoHub.Data.Models.Model", b =>
@@ -201,20 +210,6 @@ namespace AutoHub.Data.Migrations
                     b.HasIndex("BrandId");
 
                     b.ToTable("Models");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("db8d32aa-5814-4755-b257-856a086e2974"),
-                            BrandId = new Guid("c5bff384-4440-480a-b62f-e544ea4b8b05"),
-                            Description = "The BMW 340i Sedan offers a powerful engine, refined handling, and luxury features.",
-                            FuelType = "Petrol",
-                            GasConsumption = 7.2m,
-                            HorsePower = 320,
-                            ImageUrl = "https://i.pinimg.com/736x/ef/06/9e/ef069ec0aecb59c7858a19508b691b85.jpg",
-                            Name = "BMW 340i Sedan",
-                            Year = 2016
-                        });
                 });
 
             modelBuilder.Entity("AutoHub.Data.Models.Engine", b =>
@@ -225,7 +220,15 @@ namespace AutoHub.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AutoHub.Data.Models.Model", "Model")
+                        .WithMany("Engines")
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Brand");
+
+                    b.Navigation("Model");
                 });
 
             modelBuilder.Entity("AutoHub.Data.Models.Model", b =>
@@ -244,6 +247,11 @@ namespace AutoHub.Data.Migrations
                     b.Navigation("Engines");
 
                     b.Navigation("Models");
+                });
+
+            modelBuilder.Entity("AutoHub.Data.Models.Model", b =>
+                {
+                    b.Navigation("Engines");
                 });
 #pragma warning restore 612, 618
         }

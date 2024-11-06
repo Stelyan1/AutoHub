@@ -63,7 +63,7 @@ namespace AutoHub.Data.Configuration
 
         private IEnumerable<Engine> SeedEngine()
         {
-            var modelId = new Guid("348DE990-D33A-4271-A79E-2820BF517459");
+            
             IEnumerable<Engine> engines = new List<Engine>()
             {
 
@@ -71,8 +71,8 @@ namespace AutoHub.Data.Configuration
                 {
                     Id = Guid.NewGuid(),
                     Name = "B58",
-                    BrandId = new Guid("C5BFF384-4440-480A-B62F-E544EA4B8B05"),
-                    ModelId = modelId,
+                    BrandId = new Guid("148C36A7-5930-4CE3-8BB0-658FD772C423"),
+                    ModelId = new Guid("79A4D785-273D-488D-B7FE-F9AB58C405BF"),
                     Cylinders = 6,
                     ValvetrainDriveSystem = "Chain",
                     PowerOutput = "322-385hp",
