@@ -46,5 +46,23 @@
             public const byte YearsProductionMinLength = 9;
             public const byte YearsProductionMaxLength = 20;
         }
+
+        public static class Gearbox
+        {
+            public const byte GearboxNameMinLength = 3;
+            public const byte GearboxNameMaxLength = 40;
+
+            public const byte TransmissionTypeMinLength = 6;
+            public const byte TransmissionTypeMaxLength = 10;
+
+            public const byte YearsProducedMinLength = 9;
+            public const byte YearsProducedMaxLength = 20;
+
+            public const byte DescriptionMinLength = 5;
+            public const byte DescriptionMaxLength = 200;
+
+            public const byte ManufacturerMinLength = 3;
+            public const byte ManufacturerMaxLength = 40;
+        }
     }
 }

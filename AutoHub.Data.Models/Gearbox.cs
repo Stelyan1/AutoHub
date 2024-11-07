@@ -25,14 +25,19 @@ namespace AutoHub.Data.Models
         public string TransmissionType { get; set; } = null!;
 
         [Comment("How much speeds does it have from 5 to 8")]
-        public string Speeds { get; set; } = null!;
+        public int Speeds { get; set; } 
 
         [Comment("Years produced")]
         public string YearsProduced { get; set; } = null!;
 
         [Comment("Manufacturer of the gearbox")]
-        public Guid Manufacturer {  get; set; }
-        public virtual Brand Brand { get; set; } = null!;
+        public string Manufacturer { get; set; } = null!;
+
+        [Comment("Description about the gearbox")]
+        public string Descritpion { get; set; } = null!;
+
+        [Comment("Image of the gearbox")]
+        public string ImageUrl { get; set; } = null!;
 
         [Comment("Model vehicle that has it")]
         public Guid Application {  get; set; }

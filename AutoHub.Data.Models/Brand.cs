@@ -33,9 +33,5 @@ namespace AutoHub.Data.Models
         [Comment("Every Brand have an engine they manufactured")]
         public virtual ICollection<Engine> Engines { get; set; } 
             = new HashSet<Engine>();
-
-        [Comment("Every brand can have gearbox")]
-        public virtual ICollection<Gearbox> Gearboxes { get; set; }
-            = new HashSet<Gearbox>();
     }
 }
