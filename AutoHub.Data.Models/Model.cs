@@ -43,9 +43,13 @@ namespace AutoHub.Data.Models
         public Guid BrandId { get; set; }
         public virtual Brand Brand { get; set; } = null!;
 
-        [Comment("Every Brand have an engine they manufactured")]
+        [Comment("Every model have an engine")]
         public virtual ICollection<Engine> Engines { get; set; }
             = new HashSet<Engine>();
+
+        [Comment("Every model can have gearbox")]
+        public virtual ICollection<Gearbox> Gearboxes { get; set; }
+            = new HashSet<Gearbox>();
 
     }
 }
