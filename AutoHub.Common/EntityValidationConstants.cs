@@ -59,7 +59,7 @@
             public const byte YearsProducedMaxLength = 20;
 
             public const byte DescriptionMinLength = 5;
-            public const byte DescriptionMaxLength = 200;
+            public const int DescriptionMaxLength = 500;
 
             public const byte ManufacturerMinLength = 3;
             public const byte ManufacturerMaxLength = 40;

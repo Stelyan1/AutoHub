@@ -26,6 +26,7 @@ namespace AutoHub.Data
         public virtual DbSet<Brand> Brands { get; set; } = null!;
         public virtual DbSet<Model> Models { get; set; } = null!;
         public virtual DbSet<Engine> Engines { get; set; } = null!;
+        public virtual DbSet<Gearbox> Gearboxes { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
