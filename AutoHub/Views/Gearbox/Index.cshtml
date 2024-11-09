@@ -1,0 +1,28 @@
+﻿@using AutoHub.Data.Models
+@model IEnumerable<AutoHub.Data.Models.Gearbox>
+
+<h2 class="text-center">All Gearboxes</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (Gearbox gearboxes in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    <img src="@gearboxes.ImageUrl" alt="@gearboxes.Name" class="card-img-top" style="max-height: 200px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@gearboxes.Name</h5>
+                        <a href="@Url.Action("Details", "Gearbox", new { id = gearboxes.Id })" class="btn btn-primary">Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<a asp-action="Create" class="btn btn-primary">Add New Gearbox</a>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

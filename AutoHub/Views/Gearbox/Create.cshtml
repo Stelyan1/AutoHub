@@ -1,0 +1,58 @@
+﻿@using AutoHub.Web.ViewModels.Models
+@model GearboxViewModel
+
+<h2>Add a New Gearbox</h2>
+
+<form asp-action="Create" method="post">
+    <div>
+        <label for="Name">Gearbox Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Manufacturer">Manufacturer</label>
+        <input asp-for="Manufacturer" class="form-control" />
+        <span asp-validation-for="Manufacturer" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Application"></label>
+        @Html.DropDownListFor(model => model.Application,
+                 new SelectList(Model.Models, "Id", "Name", Model.Application),
+                 "Select a model", new { @class = "form-control" })
+
+        <span asp-validation-for="Application"></span>
+    </div>
+    <div>
+        <label asp-for="TransmissionType">Transmission Type</label>
+        <select asp-for="TransmissionType" class="form-control">
+            <option value="">-- Select Transmission --</option>
+            <option value="Manual">Manual</option>
+            <option value="Automatic">Automatic</option>
+        </select>
+        <span asp-validation-for="TransmissionType" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Speeds">Speeds</label>
+        <input asp-for="Speeds" class="form-control" />
+        <span asp-validation-for="Speeds" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="YearsProduced">Years Produced</label>
+        <input asp-for="YearsProduced" class="form-control" />
+        <span asp-validation-for="YearsProduced" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Description">Description</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="ImageUrl">ImageUrl</label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Create Gearbox</button>
+</form>
+
+<a asp-action="Index">Back to Gearbox List</a>
