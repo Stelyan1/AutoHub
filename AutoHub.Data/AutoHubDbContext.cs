@@ -5,11 +5,13 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using AutoHub.Data.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AutoHub.Data
 {
-    public class AutoHubDbContext : DbContext
+    public class AutoHubDbContext : IdentityDbContext<IdentityUser>
     {
         public AutoHubDbContext()
         {
@@ -30,6 +32,7 @@ namespace AutoHub.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
