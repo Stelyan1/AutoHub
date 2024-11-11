@@ -20,7 +20,11 @@
     </div>
 </div>
 
-<a asp-action="Create" class="btn btn-primary">Add New Engine</a>
+
+@if (User.Identity.IsAuthenticated)
+{
+  <a asp-action="Create" class="btn btn-primary">Add New Engine</a>
+}
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

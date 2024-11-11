@@ -1,6 +1,7 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
 using AutoHub.Web.ViewModels.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,7 @@ namespace AutoHub.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create() 
         {
             var brands = dbContext.Brands.ToList();
@@ -37,6 +39,7 @@ namespace AutoHub.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(EngineViewModel model)
         {
             if (ModelState.IsValid) 

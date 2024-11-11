@@ -1,6 +1,7 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
 using AutoHub.Web.ViewModels.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,7 @@ namespace AutoHub.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create() 
         {
             var modelApplication = this.dbContext.Models.ToList();
@@ -38,6 +40,7 @@ namespace AutoHub.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(GearboxViewModel model) 
         {
             if (ModelState.IsValid) 

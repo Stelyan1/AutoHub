@@ -1,6 +1,7 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
 using AutoHub.Web.ViewModels.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
@@ -26,12 +27,14 @@ namespace AutoHub.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create() 
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(BrandViewModel brandModel) 
         {
             if (!ModelState.IsValid) 
