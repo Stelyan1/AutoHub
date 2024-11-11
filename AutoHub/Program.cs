@@ -1,6 +1,7 @@
 namespace AutoHub
 {
     using AutoHub.Data;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     public class Program
@@ -18,6 +19,10 @@ namespace AutoHub
 
             builder.Services.AddControllersWithViews();
 
+            // Add Identity services
+            builder.Services.AddDefaultIdentity<IdentityUser>()
+                            .AddEntityFrameworkStores<AutoHubDbContext>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -33,11 +38,16 @@ namespace AutoHub
 
             app.UseRouting();
 
+            // Add Authorization and Authentication middleware
+            app.UseAuthorization();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            // Enable Identity's Razor Pages for login, register 
+            app.MapRazorPages();
 
             app.Run();
         }

@@ -34,7 +34,7 @@ namespace AutoHub.Data.Models
         public string Manufacturer { get; set; } = null!;
 
         [Comment("Description about the gearbox")]
-        public string Descritpion { get; set; } = null!;
+        public string Description { get; set; } = null!;
 
         [Comment("Image of the gearbox")]
         public string ImageUrl { get; set; } = null!;

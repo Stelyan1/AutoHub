@@ -61,7 +61,7 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("18663e92-40f3-4162-b3b8-76504b4db55a"),
+                            Id = new Guid("fe35bc43-0785-48b6-95bd-f65c129bea9d"),
                             Description = "Automobili Lamborghini is an Italian manufacturer of luxury sports cars and SUVs based in Sant'Agata Bolognese. The company is owned by the Volkswagen Group through its subsidiary Audi.",
                             FoundedBy = "Ferruccio Lamborghini",
                             FoundedDate = new DateTime(1963, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -70,7 +70,7 @@ namespace AutoHub.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("506004ae-8232-4aea-9ca4-3942547d6f6a"),
+                            Id = new Guid("15bb0aa4-68e4-4825-b7c7-be2bd81486cf"),
                             Description = "BMW is a German company with activities covering the production and sale of motor vehicles, spare parts and accessories for motor vehicles, engineering products, as well as related services.",
                             FoundedBy = "Karl Rapp , Gustav Otto , Camillo Castiglioni , Franz Josef Pop",
                             FoundedDate = new DateTime(1916, 3, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -79,7 +79,7 @@ namespace AutoHub.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c108397e-6bd3-431c-b9b1-209e8293f46e"),
+                            Id = new Guid("23f400ca-e9b8-464f-88be-c779f52d58fd"),
                             Description = "Mercedes-Benz is a trademark and a company of the same name - a manufacturer of premium cars, trucks, buses and other vehicles, which is part of the German concern \"Mercedes-Benz Group\". It is one of the most recognizable car brands in the world.",
                             FoundedBy = "Karl Benz, Gottlieb Daimler, Wilhelm Maybach and Emil Jellinek",
                             FoundedDate = new DateTime(1926, 6, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -159,7 +159,7 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cac62e40-c8d8-4e33-9470-7afa6652287a"),
+                            Id = new Guid("b41f7cb3-e208-4649-b8d6-800f377b6a98"),
                             BrandId = new Guid("148c36a7-5930-4ce3-8bb0-658fd772c423"),
                             Cylinders = 6,
                             ImageUrl = "https://fsc.codes/cdn/shop/articles/BMW-B58.jpg?v=1703197166",
@@ -184,7 +184,7 @@ namespace AutoHub.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Model vehicle that has it");
 
-                    b.Property<string>("Descritpion")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)")
@@ -232,9 +232,9 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c0148c8d-e787-411c-aab8-dc53545fcad4"),
+                            Id = new Guid("fb352ab0-07df-4147-a14d-67e5b13b857f"),
                             Application = new Guid("79a4d785-273d-488d-b7fe-f9ab58c405bf"),
-                            Descritpion = "The ZF 8HP transmission is ZF Friedrichshafen AG's trademark name for its 8-speed automatic transmission models for longitudinal engine applications. The name is short for 8-speed transmission with hydraulic converter and planetary gearsets. Designed and first built by ZF's subsidiary in Saarbrücken, Germany, it debuted in 2008 on the BMW 7 Series (F01) 760Li sedan fitted with the V12 engine. BMW remains a major customer for the transmission.",
+                            Description = "The ZF 8HP transmission is ZF Friedrichshafen AG's trademark name for its 8-speed automatic transmission models for longitudinal engine applications. The name is short for 8-speed transmission with hydraulic converter and planetary gearsets. Designed and first built by ZF's subsidiary in Saarbrücken, Germany, it debuted in 2008 on the BMW 7 Series (F01) 760Li sedan fitted with the V12 engine. BMW remains a major customer for the transmission.",
                             ImageUrl = "https://hips.hearstapps.com/hmg-prod/images/zf-8-speed-trans-1538511984.jpg",
                             Manufacturer = "ZF Friedrichshafen",
                             Name = "ZF 8HP Transmission",
@@ -298,7 +298,7 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("51ecd954-f488-4235-9121-56523fa10f33"),
+                            Id = new Guid("6a4f1abb-937f-470d-a3f5-728efd64cc86"),
                             BrandId = new Guid("148c36a7-5930-4ce3-8bb0-658fd772c423"),
                             Description = "The BMW 340i Sedan offers a powerful engine, refined handling, and luxury features.",
                             FuelType = "Petrol",
@@ -310,7 +310,7 @@ namespace AutoHub.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("95eeb3f2-c344-4ca9-bcc6-350a8dc83888"),
+                            Id = new Guid("6f76acbf-6b27-4581-8753-2352f9132b60"),
                             BrandId = new Guid("c6d8e95b-d57f-4b15-bc7d-2f1ad38a17a9"),
                             Description = "The output of the AMG 6.3-litre V8 engine is unchanged at 336 kW (457 hp) and can be increased to a maximum of 358 kW (487 hp) with the optional AMG Performance package. Agility, grip and ride comfort have been enhanced as a result of numerous measures to optimise the AMG sports suspension.",
                             FuelType = "Petrol",
@@ -322,7 +322,7 @@ namespace AutoHub.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b63104e1-f337-4de2-882d-0ae887ed829d"),
+                            Id = new Guid("ceeb3fb1-0cc4-46ee-9bdd-87044f9b462b"),
                             BrandId = new Guid("60caba99-72aa-421a-a569-7cb41423a3ee"),
                             Description = "Lamborghini created the Aventador SVJ to embrace challenges head-on, combining cutting-edge technology with extraordinary design, while always refusing to compromise. In a future driven by technology, it’s easy to lose the genuine thrill of driving. But in the future shaped by Lamborghini, this won’t be left behind, because there will always be a driver behind the wheel. ",
                             FuelType = "Petrol",

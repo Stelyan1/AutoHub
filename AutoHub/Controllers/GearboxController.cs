@@ -49,7 +49,7 @@ namespace AutoHub.Controllers
                     Speeds = model.Speeds,
                     YearsProduced = model.YearsProduced,
                     Manufacturer = model.Manufacturer,
-                    Descritpion = model.Description,
+                    Description = model.Description,
                     ImageUrl = model.ImageUrl,
                     Application = model.Application
                 };

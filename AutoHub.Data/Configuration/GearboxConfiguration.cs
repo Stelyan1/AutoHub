@@ -40,7 +40,7 @@ namespace AutoHub.Data.Configuration
                    .IsRequired()
                    .HasMaxLength(ManufacturerMaxLength);
 
-            builder.Property(gb => gb.Descritpion)
+            builder.Property(gb => gb.Description)
                    .IsRequired()
                    .HasMaxLength(DescriptionMaxLength);
 
@@ -63,7 +63,7 @@ namespace AutoHub.Data.Configuration
                     Speeds = 8,
                     YearsProduced = "2008-Present",
                     Manufacturer = "ZF Friedrichshafen",
-                    Descritpion = "The ZF 8HP transmission is ZF Friedrichshafen AG's trademark name for its 8-speed automatic transmission models for longitudinal engine applications. The name is short for 8-speed transmission with hydraulic converter and planetary gearsets. Designed and first built by ZF's subsidiary in Saarbrücken, Germany, it debuted in 2008 on the BMW 7 Series (F01) 760Li sedan fitted with the V12 engine. BMW remains a major customer for the transmission.",
+                    Description = "The ZF 8HP transmission is ZF Friedrichshafen AG's trademark name for its 8-speed automatic transmission models for longitudinal engine applications. The name is short for 8-speed transmission with hydraulic converter and planetary gearsets. Designed and first built by ZF's subsidiary in Saarbrücken, Germany, it debuted in 2008 on the BMW 7 Series (F01) 760Li sedan fitted with the V12 engine. BMW remains a major customer for the transmission.",
                     ImageUrl = "https://hips.hearstapps.com/hmg-prod/images/zf-8-speed-trans-1538511984.jpg",
                     Application = new Guid("79A4D785-273D-488D-B7FE-F9AB58C405BF")
                 }
