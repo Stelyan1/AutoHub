@@ -22,8 +22,29 @@ namespace AutoHub
             });
 
             // Add Identity services
-            builder.Services.AddDefaultIdentity<IdentityUser>()
-                            .AddEntityFrameworkStores<AutoHubDbContext>();
+            builder.Services.AddDefaultIdentity<IdentityUser>(cfg =>
+            {
+                cfg.Password.RequireDigit = true;
+
+                cfg.Password.RequireLowercase = true;
+
+                cfg.Password.RequireUppercase = true;
+
+                cfg.Password.RequireNonAlphanumeric = false;
+
+                cfg.Password.RequiredLength = 6;
+
+                cfg.Password.RequiredUniqueChars = 0;
+
+                cfg.SignIn.RequireConfirmedAccount = false;
+
+                cfg.SignIn.RequireConfirmedAccount = false;
+
+                cfg.SignIn.RequireConfirmedPhoneNumber = false;
+
+                cfg.User.RequireUniqueEmail = false;
+            })
+            .AddEntityFrameworkStores<AutoHubDbContext>();
 
             builder.Services.AddControllersWithViews();
 
