@@ -18,7 +18,7 @@ namespace AutoHub
             // Add services to the container.
             builder.Services.AddDbContext<AutoHubDbContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer"));
             });
 
             // Add Identity services
