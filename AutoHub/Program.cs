@@ -16,6 +16,8 @@ namespace AutoHub
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddControllersWithViews();
+
             builder.Services.AddDbContext<AutoHubDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer"));
@@ -43,10 +45,14 @@ namespace AutoHub
                 cfg.SignIn.RequireConfirmedPhoneNumber = false;
 
                 cfg.User.RequireUniqueEmail = false;
+
+                cfg.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(60);
+                cfg.Lockout.MaxFailedAccessAttempts = 3;
+                cfg.Lockout.AllowedForNewUsers = true;
             })
             .AddEntityFrameworkStores<AutoHubDbContext>();
 
-            builder.Services.AddControllersWithViews();
+            //builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 
