@@ -40,8 +40,7 @@ namespace AutoHub.Data.Migrations
                     SellerId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "Identifier of the Seller"),
                     AddedOn = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Date the product was added"),
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identifier of the category"),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, comment: "Bool to check if the product is deleted"),
-                    CategoryId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, comment: "Bool to check if the product is deleted")
                 },
                 constraints: table =>
                 {
@@ -58,11 +57,6 @@ namespace AutoHub.Data.Migrations
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryId1",
-                        column: x => x.CategoryId1,
-                        principalTable: "Categories",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -70,8 +64,7 @@ namespace AutoHub.Data.Migrations
                 columns: table => new
                 {
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identifier of the product"),
-                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "Identifier of the client"),
-                    ProductId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "Identifier of the client")
                 },
                 constraints: table =>
                 {
@@ -88,11 +81,6 @@ namespace AutoHub.Data.Migrations
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_ProductClients_Products_ProductId1",
-                        column: x => x.ProductId1,
-                        principalTable: "Products",
-                        principalColumn: "Id");
                 });
 
           
@@ -118,19 +106,9 @@ namespace AutoHub.Data.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductClients_ProductId1",
-                table: "ProductClients",
-                column: "ProductId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_CategoryId1",
-                table: "Products",
-                column: "CategoryId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_SellerId",

@@ -405,9 +405,6 @@ namespace AutoHub.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Identifier of the category");
 
-                    b.Property<Guid?>("CategoryId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(250)
@@ -448,8 +445,6 @@ namespace AutoHub.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("CategoryId1");
-
                     b.HasIndex("SellerId");
 
                     b.ToTable("Products");
@@ -465,14 +460,9 @@ namespace AutoHub.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasComment("Identifier of the client");
 
-                    b.Property<Guid?>("ProductId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("ProductId", "ClientId");
 
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("ProductId1");
 
                     b.ToTable("ProductClients");
                 });
@@ -728,10 +718,6 @@ namespace AutoHub.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AutoHub.Data.Models.Category", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId1");
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Seller")
                         .WithMany()
                         .HasForeignKey("SellerId")
@@ -756,10 +742,6 @@ namespace AutoHub.Data.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AutoHub.Data.Models.Product", null)
-                        .WithMany("ProductsClients")
-                        .HasForeignKey("ProductId1");
 
                     b.Navigation("Client");
 
