@@ -64,5 +64,26 @@
             public const byte ManufacturerMinLength = 3;
             public const byte ManufacturerMaxLength = 40;
         }
+
+        public static class Category
+        {
+            public const byte CategoryNameMinLength = 3;
+            public const byte CategoryNameMaxLength = 30;
+        }
+
+        public static class Product
+        {
+            public const byte ProductNameMinLength = 3;
+            public const byte ProductNameMaxLength = 60;
+
+            public const byte ManufacturerMinLength = 3;
+            public const byte ManufacturerMaxLength = 40;
+
+            public const byte CarsApplicationMinLength = 3;
+            public const byte CarsApplicationMaxLength = 40;
+
+            public const byte DescriptionMinLength = 5;
+            public const byte DescriptionMaxLength = 250;
+        }
     }
 }
