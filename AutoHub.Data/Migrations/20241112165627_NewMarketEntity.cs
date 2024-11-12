@@ -8,12 +8,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AutoHub.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class NewEntities : Migration
+    public partial class NewMarketEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
            
+           
+
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -26,6 +28,8 @@ namespace AutoHub.Data.Migrations
                     table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
+            
+           
             migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
@@ -40,7 +44,8 @@ namespace AutoHub.Data.Migrations
                     SellerId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "Identifier of the Seller"),
                     AddedOn = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Date the product was added"),
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identifier of the category"),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, comment: "Bool to check if the product is deleted")
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, comment: "Bool to check if the product is deleted"),
+                    CategoryId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -57,14 +62,24 @@ namespace AutoHub.Data.Migrations
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryId1",
+                        column: x => x.CategoryId1,
+                        principalTable: "Categories",
+                        principalColumn: "Id");
                 });
+
+          
+
+            
 
             migrationBuilder.CreateTable(
                 name: "ProductClients",
                 columns: table => new
                 {
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identifier of the product"),
-                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "Identifier of the client")
+                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "Identifier of the client"),
+                    ProductId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -81,34 +96,50 @@ namespace AutoHub.Data.Migrations
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_ProductClients_Products_ProductId1",
+                        column: x => x.ProductId1,
+                        principalTable: "Products",
+                        principalColumn: "Id");
                 });
 
-          
-
+            
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("077550e5-d63f-48f7-a5f2-b37207c3735f"), "Braking System" },
-                    { new Guid("0c3689e7-6a62-4296-beac-3f81388df7c1"), "Filters" },
-                    { new Guid("1cbe1371-212a-4221-ab4a-2cebbb62f917"), "Engine Parts" },
-                    { new Guid("2060d6bc-46dc-4e89-a307-8e91682a0410"), "Cooling System" },
-                    { new Guid("de2aecbe-f4c3-4f94-914f-bf45e98ff22c"), "Steering System" },
-                    { new Guid("ef4bfb65-b43e-43cf-b162-df40afe65f02"), "Motor Oil" }
+                    { new Guid("967f1bac-a1a2-430d-a67c-d8d7eb5bc3d1"), "Cooling System" },
+                    { new Guid("ae9de431-4065-4c9c-9c41-288979c28f17"), "Filters" },
+                    { new Guid("aea2bca6-4344-4e6b-8f8d-1c8473c05d1e"), "Motor Oil" },
+                    { new Guid("c291c0c8-0d22-4af7-b515-5b801ca93ece"), "Braking System" },
+                    { new Guid("c5277b28-85e5-4523-941e-d7bfc40f6630"), "Steering System" },
+                    { new Guid("c91e74d2-220d-40ba-83e3-e257249d9e5e"), "Engine Parts" }
                 });
 
-      
+           
 
+           
+            
             migrationBuilder.CreateIndex(
                 name: "IX_ProductClients_ClientId",
                 table: "ProductClients",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductClients_ProductId1",
+                table: "ProductClients",
+                column: "ProductId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId1",
+                table: "Products",
+                column: "CategoryId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_SellerId",
@@ -119,11 +150,16 @@ namespace AutoHub.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+          
             migrationBuilder.DropTable(
                 name: "ProductClients");
 
+            
+
             migrationBuilder.DropTable(
                 name: "Products");
+
+
 
             migrationBuilder.DropTable(
                 name: "Categories");

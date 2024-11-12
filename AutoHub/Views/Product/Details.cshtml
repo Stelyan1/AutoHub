@@ -1,0 +1,15 @@
+﻿@using AutoHub.Web.ViewModels.Models
+@model ProductViewModel
+
+<h2>@Model.ProductName</h2>
+
+<p><strong>Manufacturer:</strong> @Model.Manufacturer</p>
+<p><strong>Category:</strong> @Model.CategoryName.Name</p>
+<p><strong>Cars Application:</strong> @Model.CarsApplication</p>
+<p><strong>Description:</strong> @Model.Description</p>
+<p><strong>Seller:</strong> @Model.Seller</p>
+
+
+<img src="@Model.ImageUrl" alt="Brand Logo" style="width: 450px; height: 400px; object-fit: contain; border: hidden 1px solid #ccc; padding: 5px;" />
+
+<a asp-action="Index" class="btn btn-primary">Back to All Products</a>

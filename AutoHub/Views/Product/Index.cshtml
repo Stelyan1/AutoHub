@@ -1,0 +1,23 @@
+﻿@using AutoHub.Data.Models
+@model IEnumerable<AutoHub.Data.Models.Product>
+
+<h2 class="text-center">All Products</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (Product products in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    <img src="@products.ImageUrl" alt="@products.ProductName" class="card-img-top" style="max-height: 200px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h6 class="card-title">@products.ProductName</h6>
+                        <p>Manufacturer: @products.Manufacturer</p> <p>@products.Price BGN</p>
+                        <a href="@Url.Action("Buy", "Product", new { id = products.Id })" class="btn btn-primary">Buy</a>
+                        <a href="@Url.Action("Details", "Product", new { id = products.Id })" class="btn btn-primary">Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
