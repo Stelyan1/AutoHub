@@ -180,6 +180,64 @@ namespace AutoHub.Controllers
             return RedirectToAction(nameof(Cart));
         }
 
+        [HttpGet]
+        [Authorize]
+        public IActionResult Edit(string id) 
+        {
+
+            bool isValid = Guid.TryParse(id, out Guid guidId);
+            if (!isValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            var product = dbContext.Products
+                .Where(p => p.Id == guidId && p.IsDeleted == false)
+                .Select(p => new ProductViewModel
+                {
+                    ProductName = p.ProductName,
+                    Manufacturer = p.Manufacturer,
+                    CategoryId = p.CategoryId,
+                    CarsApplication = p.CarsApplication,
+                    Description = p.Description,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl,
+                    AddedOn = p.AddedOn
+                })
+                .FirstOrDefault();
+
+            product.Categories = dbContext.Categories.ToList();
+
+            return View(product);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Edit(ProductViewModel model) 
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Categories = dbContext.Categories.ToList();
+
+                return View(model);
+            }
+
+            var productEntity = dbContext.Products
+                .FirstOrDefault(p => p.Id == model.Id && p.IsDeleted == false);
+
+            productEntity.ProductName = model.ProductName;
+            productEntity.Manufacturer = model.Manufacturer;
+            productEntity.CategoryId = model.CategoryId;
+            productEntity.CarsApplication = model.CarsApplication;
+            productEntity.Description = model.Description;
+            productEntity.Price = model.Price;
+            productEntity.ImageUrl = model.ImageUrl;
+            productEntity.AddedOn = model.AddedOn;
+
+            dbContext.SaveChanges();
+
+            return RedirectToAction("Details", new { id = productEntity.Id });
+        }
         private string GetSellerId()
         {
             return User.FindFirstValue(ClaimTypes.NameIdentifier);
