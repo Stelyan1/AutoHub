@@ -12,6 +12,8 @@ namespace AutoHub.Web.ViewModels.Models
     using static AutoHub.Common.ProductModelErrorMessages;
     public class ProductViewModel
     {
+        public Guid Id { get; set; }
+
         [Required(ErrorMessage = ProductNameErrorMsg)]
         [MinLength(ProductNameMinLength)]
         [MaxLength(ProductNameMaxLength)]

@@ -1,6 +1,14 @@
 ﻿@using AutoHub.Data.Models
 @model IEnumerable<AutoHub.Data.Models.Product>
 
+<style>
+    .custom-green {
+        background-color: #1ee64b;
+        color: white;
+        border: none;
+    }
+</style>
+
 <h2 class="text-center">All Products</h2>
 
 <div class="container">
@@ -8,11 +16,21 @@
         @foreach (Product models in Model)
         {
             <div class="col-md-4 mb-4">
-                <div class="card text-center">
-                    <img src="@models.ImageUrl" alt="@models.ProductName" class="card-img-top" style="max-height: 200px; object-fit: cover;" />
-                    <div class="card-body">
+                <div class="card text-center h-100 d-flex flex-column">
+                    <div class="image-container" style="height: 140px; overflow: hidden;">
+                        <img src="@models.ImageUrl" alt="@models.ProductName" class="card-img-top" style="height: 100%; width: 100%; object-fit: cover;" />
+                    </div>
+
+                    <div class="card-body d-flex flex-column">
                         <h5 class="card-title">@models.ProductName</h5>
-                        <a href="@Url.Action("Details", "Product", new { id = models.Id })" class="btn btn-primary">Details</a>
+
+                        <p><strong>@models.Price BGN</strong></p>
+                        <div class="mt-auto">
+                            <form asp-controller="Product" asp-action="Buy" asp-route-id="@models.Id" method="post" style="display:inline;">
+                                <button type="submit" class="btn custom-green">Buy</button>
+                            </form>
+                            <a href="@Url.Action("Details", "Product", new { id = models.Id })" class="btn btn-primary">Details</a>
+                        </div>
                     </div>
                 </div>
             </div>

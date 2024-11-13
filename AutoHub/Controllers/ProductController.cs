@@ -96,6 +96,54 @@ namespace AutoHub.Controllers
           return View(product);
         }
 
+        [HttpPost]
+        [Authorize]
+        public IActionResult Buy(string id)
+        {
+            bool isValid = Guid.TryParse(id, out Guid guidId);
+            if (!isValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            var userId = GetSellerId();
+
+            var productInCartCheck = dbContext.ProductClients
+                .Any(pc => pc.ClientId == userId && pc.ProductId == guidId);
+
+            var productClient = new ProductClient
+            {
+                ProductId = guidId,
+                ClientId = userId
+            };
+
+            dbContext.ProductClients.Add(productClient);
+            dbContext.SaveChanges();
+
+            return RedirectToAction(nameof(Cart));
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Cart() 
+        {
+            var userId = GetSellerId();
+
+            var product = dbContext.ProductClients
+               .Include(pc => pc.Product)
+               .Where(pc => pc.ClientId == userId)
+               .Select(pc => new ProductViewModel
+               {
+                   Id = pc.ProductId,
+                   ProductName = pc.Product.ProductName,
+                   Price = pc.Product.Price,
+                   ImageUrl = pc.Product.ImageUrl
+               })
+               .ToList();
+
+            return View(product);
+        }
+
         private string GetSellerId()
         {
             return User.FindFirstValue(ClaimTypes.NameIdentifier);
