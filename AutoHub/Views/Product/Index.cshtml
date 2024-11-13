@@ -1,0 +1,33 @@
+﻿@using AutoHub.Data.Models
+@model IEnumerable<AutoHub.Data.Models.Product>
+
+<h2 class="text-center">All Products</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (Product models in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    <img src="@models.ImageUrl" alt="@models.ProductName" class="card-img-top" style="max-height: 200px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@models.ProductName</h5>
+                        <a href="@Url.Action("Details", "Product", new { id = models.Id })" class="btn btn-primary">Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <a asp-action="Create" class="btn btn-primary">Add Product</a>
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
