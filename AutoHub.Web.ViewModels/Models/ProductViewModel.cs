@@ -37,9 +37,6 @@ namespace AutoHub.Web.ViewModels.Models
         [Required(ErrorMessage = ImageUrlErrorMsg)]
         public string ImageUrl { get; set; } = null!;
 
-        //[Required(ErrorMessage = SellerErrorMsg)]
-        //public string SellerId { get; set; } = null!;
-
         [Required(ErrorMessage = AddedOnErrorMsg)]
         public DateTime AddedOn { get; set; } = DateTime.Now;
 

@@ -3,6 +3,7 @@ using AutoHub.Data.Models;
 using AutoHub.Web.ViewModels.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace AutoHub.Controllers
@@ -69,6 +70,30 @@ namespace AutoHub.Controllers
             model.Categories = dbContext.Categories.ToList();
 
             return View(model);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Details(string id) 
+        {
+            bool isValid = Guid.TryParse(id, out Guid guidId);
+            if (!isValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            Product? product = this.dbContext
+                .Products
+                .Include(p => p.Category)
+                .Include(p => p.Seller)
+                .FirstOrDefault(p => p.Id == guidId);
+
+            if (product == null) 
+            {
+                return RedirectToAction(nameof(Index));
+            }
+                
+          return View(product);
         }
 
         private string GetSellerId()
