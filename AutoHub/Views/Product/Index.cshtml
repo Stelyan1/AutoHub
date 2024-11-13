@@ -4,7 +4,19 @@
 
 <style>
     .custom-green {
-        background-color: #1ee64b;
+        background-color: #0ec41a;
+        color: white;
+        border: none;
+    }
+
+    .custom-red {
+        background-color: #c90404;
+        color: white;
+        border: none;
+    }
+
+    .custom-black {
+        background-color: #000000;
         color: white;
         border: none;
     }
@@ -36,9 +48,9 @@
                             }
                             else
                             {
+                                <a href="@Url.Action("Edit", "Product", new { id = models.Id })" class="btn custom-black">Edit</a>
                                 <a href="@Url.Action("Details", "Product", new { id = models.Id })" class="btn btn-primary">Details</a>
-                                <a href="@Url.Action("Edit", "Product", new { id = models.Id })" class="btn btn-primary">Edit</a>
-                                <a href="@Url.Action("Delete", "Product", new { id = models.Id })" class="btn btn-primary">Delete</a>
+                                <a href="@Url.Action("Delete", "Product", new { id = models.Id })" class="btn custom-red">Delete</a>
                             }
                             
                         </div>
