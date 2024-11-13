@@ -238,6 +238,45 @@ namespace AutoHub.Controllers
 
             return RedirectToAction("Details", new { id = productEntity.Id });
         }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Delete(string id) 
+        {
+            bool isValid = Guid.TryParse(id, out Guid guidId);
+            if (!isValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            var product = dbContext.Products
+                .Where(p => p.Id == guidId)
+                .Select(p => new ProductDeleteViewModel
+                {
+                    Id = p.Id,
+                    ProductName = p.ProductName,
+                    SellerId = p.SellerId,
+                    Seller = p.Seller.UserName ?? string.Empty
+                })
+                .FirstOrDefault();
+
+            return View(product);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Delete (ProductDeleteViewModel model)
+        {
+            var productEntity = dbContext.Products.Find(model.Id);
+
+            if (productEntity != null)
+            {
+                dbContext.Products.Remove(productEntity);
+                productEntity.IsDeleted = true;
+                dbContext.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
+        }
         private string GetSellerId()
         {
             return User.FindFirstValue(ClaimTypes.NameIdentifier);
