@@ -149,6 +149,7 @@ namespace AutoHub.Controllers
         public IActionResult RemoveFromCart(string id)
         {
             bool isValid = Guid.TryParse(id, out Guid guidId);
+
             if (!isValid)
             {
                 return this.RedirectToAction(nameof(Index));
@@ -162,8 +163,7 @@ namespace AutoHub.Controllers
             if (productInCartCheckRemove != null)
             {
                 dbContext.ProductClients.Remove(productInCartCheckRemove);
-
-                dbContext.SaveChangesAsync();
+                dbContext.SaveChanges();
             }
 
             return RedirectToAction(nameof(Cart));
