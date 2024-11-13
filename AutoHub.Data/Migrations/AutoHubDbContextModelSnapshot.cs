@@ -61,7 +61,7 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("fcea73cd-87aa-476c-aff9-fa05108ba6a6"),
+                            Id = new Guid("3b8c377c-e11c-4db3-be77-94e81003d144"),
                             Description = "Automobili Lamborghini is an Italian manufacturer of luxury sports cars and SUVs based in Sant'Agata Bolognese. The company is owned by the Volkswagen Group through its subsidiary Audi.",
                             FoundedBy = "Ferruccio Lamborghini",
                             FoundedDate = new DateTime(1963, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -70,7 +70,7 @@ namespace AutoHub.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("24dc9899-fc2e-4d22-84b7-d43b36118cd2"),
+                            Id = new Guid("bcd65fac-8a51-4847-aeda-8f5e69c61ea5"),
                             Description = "BMW is a German company with activities covering the production and sale of motor vehicles, spare parts and accessories for motor vehicles, engineering products, as well as related services.",
                             FoundedBy = "Karl Rapp , Gustav Otto , Camillo Castiglioni , Franz Josef Pop",
                             FoundedDate = new DateTime(1916, 3, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -79,7 +79,7 @@ namespace AutoHub.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5d55cfe3-00e1-4568-b933-401cec54fa19"),
+                            Id = new Guid("ab9cbdf6-ec2f-4fed-bf77-fe08e0c691e4"),
                             Description = "Mercedes-Benz is a trademark and a company of the same name - a manufacturer of premium cars, trucks, buses and other vehicles, which is part of the German concern \"Mercedes-Benz Group\". It is one of the most recognizable car brands in the world.",
                             FoundedBy = "Karl Benz, Gottlieb Daimler, Wilhelm Maybach and Emil Jellinek",
                             FoundedDate = new DateTime(1926, 6, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -108,32 +108,32 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("fc77bbe1-6d78-411f-9919-92c383e105b1"),
+                            Id = new Guid("3b37ddc8-8d17-47ac-8dc6-4c183e94f8bc"),
                             Name = "Motor Oil"
                         },
                         new
                         {
-                            Id = new Guid("664830f8-bd71-47d8-a9c2-005ccb532551"),
+                            Id = new Guid("33e08547-94b6-49f6-915e-8ca799814ba7"),
                             Name = "Filters"
                         },
                         new
                         {
-                            Id = new Guid("4a64f306-4d68-4b4d-a639-6352ac333c79"),
+                            Id = new Guid("203cc880-da60-4009-917a-3bf12c835708"),
                             Name = "Steering System"
                         },
                         new
                         {
-                            Id = new Guid("1ad2385b-ba61-4f15-b09b-928346fe0748"),
+                            Id = new Guid("8ce92c95-f3c2-4fd0-816c-7a949ef1f6b7"),
                             Name = "Braking System"
                         },
                         new
                         {
-                            Id = new Guid("4ce506b9-40d6-451b-a083-604d24b67a54"),
+                            Id = new Guid("c60229d8-9448-450e-9b1a-0c7d037fa501"),
                             Name = "Engine Parts"
                         },
                         new
                         {
-                            Id = new Guid("42cd5925-f1f9-4ad1-8175-25772d8802e6"),
+                            Id = new Guid("429adbc4-55f2-44d8-b54c-7a6a1e3c4a09"),
                             Name = "Cooling System"
                         });
                 });
@@ -209,7 +209,7 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("eb264616-f988-4343-9ce3-9740c6104c5b"),
+                            Id = new Guid("f9eebc76-754c-48a3-b0c3-d064cab8637b"),
                             BrandId = new Guid("148c36a7-5930-4ce3-8bb0-658fd772c423"),
                             Cylinders = 6,
                             ImageUrl = "https://fsc.codes/cdn/shop/articles/BMW-B58.jpg?v=1703197166",
@@ -282,7 +282,7 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2c801fe9-b63b-4031-b08f-a18dcd5b1df0"),
+                            Id = new Guid("796cac38-f3e9-429d-b0ab-e1042f879c7a"),
                             Application = new Guid("79a4d785-273d-488d-b7fe-f9ab58c405bf"),
                             Description = "The ZF 8HP transmission is ZF Friedrichshafen AG's trademark name for its 8-speed automatic transmission models for longitudinal engine applications. The name is short for 8-speed transmission with hydraulic converter and planetary gearsets. Designed and first built by ZF's subsidiary in Saarbrücken, Germany, it debuted in 2008 on the BMW 7 Series (F01) 760Li sedan fitted with the V12 engine. BMW remains a major customer for the transmission.",
                             ImageUrl = "https://hips.hearstapps.com/hmg-prod/images/zf-8-speed-trans-1538511984.jpg",
@@ -348,7 +348,7 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5512250e-205c-4825-a7bb-f4a0f78a693b"),
+                            Id = new Guid("19b20918-c614-43cd-90fe-a4d07e4a20e3"),
                             BrandId = new Guid("148c36a7-5930-4ce3-8bb0-658fd772c423"),
                             Description = "The BMW 340i Sedan offers a powerful engine, refined handling, and luxury features.",
                             FuelType = "Petrol",
@@ -360,7 +360,7 @@ namespace AutoHub.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("74799b68-dfd8-4cdb-9e52-e6627fbee79f"),
+                            Id = new Guid("a42260fc-1c1f-4fea-92d9-700049abd87e"),
                             BrandId = new Guid("c6d8e95b-d57f-4b15-bc7d-2f1ad38a17a9"),
                             Description = "The output of the AMG 6.3-litre V8 engine is unchanged at 336 kW (457 hp) and can be increased to a maximum of 358 kW (487 hp) with the optional AMG Performance package. Agility, grip and ride comfort have been enhanced as a result of numerous measures to optimise the AMG sports suspension.",
                             FuelType = "Petrol",
@@ -372,7 +372,7 @@ namespace AutoHub.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e61bb402-9640-4d75-a680-ad1752dbae8f"),
+                            Id = new Guid("f3d1721b-0472-4c63-8952-5319697c7a33"),
                             BrandId = new Guid("60caba99-72aa-421a-a569-7cb41423a3ee"),
                             Description = "Lamborghini created the Aventador SVJ to embrace challenges head-on, combining cutting-edge technology with extraordinary design, while always refusing to compromise. In a future driven by technology, it’s easy to lose the genuine thrill of driving. But in the future shaped by Lamborghini, this won’t be left behind, because there will always be a driver behind the wheel. ",
                             FuelType = "Petrol",
@@ -464,10 +464,6 @@ namespace AutoHub.Data.Migrations
                     b.Property<string>("ClientId")
                         .HasColumnType("nvarchar(450)")
                         .HasComment("Identifier of the client");
-
-                    b.Property<bool>("HasBought")
-                        .HasColumnType("bit")
-                        .HasComment("To check if product is bought");
 
                     b.Property<Guid?>("ProductId1")
                         .HasColumnType("uniqueidentifier");

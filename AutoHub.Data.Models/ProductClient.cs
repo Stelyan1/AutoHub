@@ -19,9 +19,6 @@ namespace AutoHub.Data.Models
         public Guid ProductId { get; set; }
         public Product Product { get; set; }
 
-        [Comment("To check if product is bought")]
-        public bool HasBought { get; set; } = false;
-
         [Comment("Identifier of the client")]
         public string ClientId { get; set; }
         public IdentityUser Client { get; set; }

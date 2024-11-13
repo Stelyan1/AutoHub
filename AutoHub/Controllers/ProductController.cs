@@ -21,10 +21,21 @@ namespace AutoHub.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            IEnumerable<Product> allProducts = this.dbContext
-                .Products.ToList();
+         
+            var products = dbContext.Products
+               .Select(p => new ProductIndexViewModel()
+               {
+                   Id = p.Id,
+                   ImageUrl = p.ImageUrl,
+                   ProductName = p.ProductName,
+                   Price = p.Price,
+                   HasBought = dbContext.ProductClients.Any(pc => pc.ClientId == GetSellerId() &&
+                   pc.ProductId == p.Id),
+                   IsSeller = p.SellerId == GetSellerId()
+               })
+               .ToList();
 
-            return View(allProducts);
+            return View(products);
         }
 
         [HttpGet]
@@ -114,7 +125,7 @@ namespace AutoHub.Controllers
             var productClient = new ProductClient
             {
                 ProductId = guidId,
-                ClientId = userId
+                ClientId = userId,
             };
 
             dbContext.ProductClients.Add(productClient);
