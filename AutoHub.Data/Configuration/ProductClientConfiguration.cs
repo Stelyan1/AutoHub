@@ -24,6 +24,9 @@ namespace AutoHub.Data.Configuration
                    .WithMany()
                    .HasForeignKey(pc => pc.ClientId)
                    .IsRequired();
+
+            builder.Property(pc => pc.HasBought)
+                   .IsRequired();
         }
     }
 }
