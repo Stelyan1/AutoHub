@@ -144,6 +144,31 @@ namespace AutoHub.Controllers
             return View(product);
         }
 
+        [HttpPost]
+        [Authorize]
+        public IActionResult RemoveFromCart(string id)
+        {
+            bool isValid = Guid.TryParse(id, out Guid guidId);
+            if (!isValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            var userId = GetSellerId();
+
+            var productInCartCheckRemove = dbContext.ProductClients
+                .FirstOrDefault(pc => pc.ClientId == userId && pc.ProductId == guidId);
+
+            if (productInCartCheckRemove != null)
+            {
+                dbContext.ProductClients.Remove(productInCartCheckRemove);
+
+                dbContext.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Cart));
+        }
+
         private string GetSellerId()
         {
             return User.FindFirstValue(ClaimTypes.NameIdentifier);
