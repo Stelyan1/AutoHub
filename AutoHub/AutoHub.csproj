@@ -21,6 +21,7 @@
 
   <ItemGroup>
 	  <ProjectReference Include="..\AutoHub.Data\AutoHub.Data.csproj" />
+	  <ProjectReference Include="..\AutoHub.Infrastructure\AutoHub.Infrastructure.csproj" />
     <ProjectReference Include="..\AutoHub.Web.ViewModels\AutoHub.Web.ViewModels.csproj" />
   </ItemGroup>
 

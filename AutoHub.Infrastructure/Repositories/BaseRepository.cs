@@ -1,8 +1,8 @@
 ﻿using AutoHub.Data;
-using AutoHub.Infrastructure.Interfaces;
+using AutoHub.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace AutoHub.Infrastructure
+namespace AutoHub.Infrastructure.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
@@ -11,8 +11,8 @@ namespace AutoHub.Infrastructure
 
         public BaseRepository(AutoHubDbContext dbContext)
         {
-             _dbContext = dbContext;
-             _dbSet = _dbContext.Set<T>();
+            _dbContext = dbContext;
+            _dbSet = _dbContext.Set<T>();
         }
         public async Task AddAsync(T entity)
         {

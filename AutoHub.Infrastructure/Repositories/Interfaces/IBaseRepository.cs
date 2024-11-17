@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoHub.Infrastructure.Interfaces
+namespace AutoHub.Infrastructure.Repositories.Interfaces
 {
     public interface IBaseRepository<T> where T : class
     {

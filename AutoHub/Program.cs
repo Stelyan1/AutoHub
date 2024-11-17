@@ -4,6 +4,9 @@ using AutoHub.Data;
 namespace AutoHub
 {
     using AutoHub.Data;
+    using AutoHub.Data.Models;
+    using AutoHub.Infrastructure.Repositories;
+    using AutoHub.Infrastructure.Repositories.Interfaces;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
@@ -52,7 +55,11 @@ namespace AutoHub
             })
             .AddEntityFrameworkStores<AutoHubDbContext>();
 
-            //builder.Services.AddControllersWithViews();
+            //Registering repos in DI
+            builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            builder.Services.AddScoped<IBaseRepository<Gearbox>, GearboxRepository>();
+            builder.Services.AddScoped<IBaseRepository<Engine>, EngineRepository>();
+            builder.Services.AddScoped<IBaseRepository<Model>, ModelRepository>();
 
             var app = builder.Build();
 
