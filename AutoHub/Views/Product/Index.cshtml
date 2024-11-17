@@ -46,13 +46,17 @@
                                 </form>
                                 <a href="@Url.Action("Details", "Product", new { id = models.Id })" class="btn btn-primary">Details</a>
                             }
-                            else
+                            else if(models.IsSeller)
                             {
                                 <a href="@Url.Action("Edit", "Product", new { id = models.Id })" class="btn custom-black">Edit</a>
                                 <a href="@Url.Action("Details", "Product", new { id = models.Id })" class="btn btn-primary">Details</a>
                                 <a href="@Url.Action("Delete", "Product", new { id = models.Id })" class="btn custom-red">Delete</a>
                             }
-                            
+                            else
+                            {
+                                <a href="@Url.Action("Details", "Product", new { id = models.Id })" class="btn btn-primary">Details</a>
+                            }
+
                         </div>
                     </div>
                 </div>
