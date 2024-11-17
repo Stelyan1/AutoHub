@@ -1,5 +1,6 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
+using AutoHub.Infrastructure.Repositories.Interfaces;
 using AutoHub.Web.ViewModels.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,31 +10,30 @@ namespace AutoHub.Controllers
 {
     public class GearboxController : Controller
     {
-        private readonly AutoHubDbContext dbContext;
+        private readonly IGearboxRepository _gearboxRepository;
+        private readonly IBaseRepository<Model> _modelRepository;
 
-        public GearboxController(AutoHubDbContext dbContext)
+        public GearboxController(IGearboxRepository gearboxRepository, IBaseRepository<Model> modelRepository)
         {
-            this.dbContext = dbContext;
+            _gearboxRepository = gearboxRepository;
+            _modelRepository = modelRepository;    
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var gearBoxes = this.dbContext
-                .Gearboxes.ToList();
-
-            return View(gearBoxes);
+            var gearboxes = await _gearboxRepository.GetAllAsync();
+            return View(gearboxes);
         }
 
         [HttpGet]
         [Authorize]
-        public IActionResult Create() 
+        public async Task<IActionResult> Create() 
         {
-            var modelApplication = this.dbContext.Models.ToList();
-
-            var gearboxViewModel = new GearboxViewModel 
-            { 
-                Models = modelApplication 
+            var modelApplication = await _modelRepository.GetAllAsync();
+            var gearboxViewModel = new GearboxViewModel
+            {
+                Models = modelApplication.ToList()
             };
 
             return View(gearboxViewModel);
@@ -41,7 +41,7 @@ namespace AutoHub.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Create(GearboxViewModel model) 
+        public async Task<IActionResult> Create(GearboxViewModel model) 
         {
             if (ModelState.IsValid) 
             {
@@ -57,19 +57,18 @@ namespace AutoHub.Controllers
                     Application = model.Application
                 };
 
-                dbContext.Gearboxes.Add(newGearbox);
-                dbContext.SaveChanges();
+                await _gearboxRepository.AddAsync(newGearbox);
+                await _gearboxRepository.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
 
-            model.Models = dbContext.Models.ToList();
-
+            model.Models = (await _modelRepository.GetAllAsync()).ToList();
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult Details(string id) 
+        public async Task<IActionResult> Details(string id) 
         {
             bool isValid = Guid.TryParse(id, out Guid guidId);
 
@@ -78,10 +77,7 @@ namespace AutoHub.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            Gearbox? gearbox = this.dbContext
-                .Gearboxes
-                .Include(g => g.Model)
-                .FirstOrDefault(g => g.Id == guidId);
+            var gearbox = await _gearboxRepository.GetByIdVerifyAsync(guidId);
             
             if (gearbox == null)
             {

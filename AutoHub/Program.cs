@@ -57,9 +57,9 @@ namespace AutoHub
 
             //Registering repos in DI
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            builder.Services.AddScoped<IBaseRepository<Gearbox>, GearboxRepository>();
             builder.Services.AddScoped<IBaseRepository<Engine>, EngineRepository>();
             builder.Services.AddScoped<IBaseRepository<Model>, ModelRepository>();
+            builder.Services.AddScoped<IGearboxRepository, GearboxRepository>();
 
             var app = builder.Build();
 

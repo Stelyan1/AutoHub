@@ -1,13 +1,14 @@
 ﻿using AutoHub.Data;
 using AutoHub.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace AutoHub.Infrastructure.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         protected readonly AutoHubDbContext _dbContext;
-        private readonly DbSet<T> _dbSet;
+        protected readonly DbSet<T> _dbSet;
 
         public BaseRepository(AutoHubDbContext dbContext)
         {
@@ -33,6 +34,7 @@ namespace AutoHub.Infrastructure.Repositories
         {
             return await _dbSet.FindAsync(id);
         }
+
 
         public async Task SaveChangesAsync()
         {

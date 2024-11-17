@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AutoHub.Data.Models
 {
-    public class Gearbox
+    public class Gearbox 
     {
 
         public Gearbox()
