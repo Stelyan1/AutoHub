@@ -1,5 +1,6 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
+using AutoHub.Infrastructure.Repositories.Interfaces;
 using AutoHub.Web.ViewModels.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,21 +10,19 @@ namespace AutoHub.Controllers
 {
     public class BrandController : Controller
     {
-        private readonly AutoHubDbContext dbContext;
+        private readonly IBrandRepository _brandRepository;
 
-        public BrandController(AutoHubDbContext dbContext)
+        public BrandController(IBrandRepository brandRepository)
         {
-            this.dbContext = dbContext;
+            _brandRepository = brandRepository;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            IEnumerable<Brand> allBrands = this.dbContext
-                .Brands
-                .ToList();
+            var brands = await _brandRepository.GetAllAsync();
 
-            return View(allBrands);
+            return View(brands);
         }
 
         [HttpGet]
@@ -35,7 +34,7 @@ namespace AutoHub.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Create(BrandViewModel brandModel) 
+        public async Task<IActionResult> Create(BrandViewModel brandModel) 
         {
             if (!ModelState.IsValid) 
             {
@@ -61,15 +60,14 @@ namespace AutoHub.Controllers
                 ImageUrl = brandModel.ImageUrl
             };
 
+            await _brandRepository.AddAsync(brand);
+            await _brandRepository.SaveChangesAsync();
 
-            this.dbContext.Brands.Add(brand);
-            this.dbContext.SaveChanges();
-
-            return this.RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
-        public IActionResult Details(string id) 
+        public async Task<IActionResult> Details(string id) 
         {
             bool isIdValid = Guid.TryParse(id, out Guid guidId);
             if (!isIdValid) 
@@ -77,8 +75,7 @@ namespace AutoHub.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            Brand? brand = this.dbContext
-                .Brands.FirstOrDefault(b => b.Id == guidId);
+            var brand = await _brandRepository.GetIdAndVerifyAsync(guidId);
 
             if (brand == null) 
             {

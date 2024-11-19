@@ -1,5 +1,6 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
+using AutoHub.Infrastructure.Repositories.Interfaces;
 using AutoHub.Web.ViewModels.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,38 +10,42 @@ namespace AutoHub.Controllers
 {
     public class EngineController : Controller
     {
-        private readonly AutoHubDbContext dbContext;
+        private readonly IEngineRepository _engineRepository;
+        private readonly IBaseRepository<Model> _modelRepository;
+        private readonly IBaseRepository<Brand> _brandRepository;
 
-        public EngineController(AutoHubDbContext dbContext)
+        public EngineController(IEngineRepository engineRepository, IBaseRepository<Model> modelRepository, IBaseRepository<Brand> brandRepository)
         {
-            this.dbContext = dbContext;
+            _engineRepository = engineRepository;
+            _modelRepository = modelRepository;
+            _brandRepository = brandRepository;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var engines = dbContext.Engines.ToList();
+            var engines = await _engineRepository.GetAllAsync();
             return View(engines);
         }
 
         [HttpGet]
         [Authorize]
-        public IActionResult Create() 
+        public async Task<IActionResult> Create() 
         {
-            var brands = dbContext.Brands.ToList();
-            var models = dbContext.Models.ToList();
+            var brands = await _brandRepository.GetAllAsync();
+            var models = await _modelRepository.GetAllAsync();
 
             var engineViewModel = new EngineViewModel
             {
-                Brands = brands,
-                Models = models
+                Brands = brands.ToList(),
+                Models = models.ToList()
             };
             return View(engineViewModel);
         }
 
         [HttpPost]
         [Authorize]
-        public IActionResult Create(EngineViewModel model)
+        public async Task<IActionResult> Create(EngineViewModel model)
         {
             if (ModelState.IsValid) 
             {
@@ -58,20 +63,20 @@ namespace AutoHub.Controllers
                     YearsProduction = model.YearsProduction
                 };
 
-                dbContext.Engines.Add(newEngine);
-                dbContext.SaveChanges();
-
+                await _engineRepository.AddAsync(newEngine);
+                await _engineRepository.SaveChangesAsync();
+               
                 return RedirectToAction(nameof(Index));
             }
 
-            model.Brands = dbContext.Brands.ToList();
-            model.Models = dbContext.Models.ToList();
+            model.Brands = (await _brandRepository.GetAllAsync()).ToList();
+            model.Models = (await _modelRepository.GetAllAsync()).ToList();
 
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult Details(string id) 
+        public async Task<IActionResult> Details(string id) 
         {
             bool isValid = Guid.TryParse(id, out Guid guidId);
 
@@ -79,10 +84,8 @@ namespace AutoHub.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            Engine? engines = this.dbContext.Engines
-                .Include(e => e.Brand)
-                .Include(e => e.Model)
-                .FirstOrDefault(e => e.Id == guidId);
+            
+            var engines = await _engineRepository.GetIdAndVerifyAsync(guidId);
 
             if (engines == null) 
             {

@@ -17,13 +17,13 @@ namespace AutoHub.Infrastructure.Repositories
 
         }
 
-        public async Task<Gearbox> GetByIdVerifyAsync(Guid id)
+        public async Task<Gearbox?> GetByIdVerifyAsync(Guid id)
         {
-           #pragma warning disable CS8603 // Possible null reference return.
+           //#pragma warning disable CS8603 // Possible null reference return.
             return await _dbSet
                 .Include(g => g.Model)
                 .FirstOrDefaultAsync(g => g.Id == id);
-           #pragma warning restore CS8603 // Possible null reference return.
+          // #pragma warning restore CS8603 // Possible null reference return.
         }
     }
 }

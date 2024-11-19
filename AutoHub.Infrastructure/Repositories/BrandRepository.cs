@@ -10,19 +10,17 @@ using System.Threading.Tasks;
 
 namespace AutoHub.Infrastructure.Repositories
 {
-    public class EngineRepository : BaseRepository<Engine>, IEngineRepository
+    public class BrandRepository : BaseRepository<Brand>, IBrandRepository
     {
-        public EngineRepository(AutoHubDbContext dbContext) : base(dbContext)
+        public BrandRepository(AutoHubDbContext dbContext) : base(dbContext) 
         {
 
         }
 
-        public async Task<Engine?> GetIdAndVerifyAsync(Guid id)
+        public async Task<Brand?> GetIdAndVerifyAsync(Guid id)
         {
             return await _dbSet
-                .Include(e => e.Brand)
-                .Include(e => e.Model)
-                .FirstOrDefaultAsync(e => e.Id == id);
+                .FirstOrDefaultAsync(b => b.Id == id);
         }
     }
 }
