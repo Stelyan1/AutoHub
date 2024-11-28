@@ -1,5 +1,5 @@
-﻿@using AutoHub.Data.Models
-@model IEnumerable<AutoHub.Data.Models.Brand>
+﻿@using AutoHub.Infrastructure.DTOs
+@model IEnumerable<AutoHub.Infrastructure.DTOs.BrandDto>
 
 
 <p class="h3">All Brands</p>
@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Brand brand in Model)
+        @foreach (BrandDto brand in Model)
         {
 
             <tr>

@@ -7,6 +7,8 @@ namespace AutoHub
     using AutoHub.Data.Models;
     using AutoHub.Infrastructure.Repositories;
     using AutoHub.Infrastructure.Repositories.Interfaces;
+    using AutoHub.Infrastructure.Services;
+    using AutoHub.Infrastructure.Services.Interfaces;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
@@ -62,6 +64,8 @@ namespace AutoHub
             builder.Services.AddScoped<IEngineRepository, EngineRepository>();
             builder.Services.AddScoped<IBrandRepository, BrandRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+            builder.Services.AddScoped<IBrandService, BrandService>();
 
             var app = builder.Build();
 

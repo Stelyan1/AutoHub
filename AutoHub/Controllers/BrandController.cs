@@ -1,6 +1,8 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
+using AutoHub.Infrastructure.DTOs;
 using AutoHub.Infrastructure.Repositories.Interfaces;
+using AutoHub.Infrastructure.Services.Interfaces;
 using AutoHub.Web.ViewModels.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,17 +12,17 @@ namespace AutoHub.Controllers
 {
     public class BrandController : Controller
     {
-        private readonly IBrandRepository _brandRepository;
+        private readonly IBrandService _brandService;
 
-        public BrandController(IBrandRepository brandRepository)
+        public BrandController(IBrandService brandService)
         {
-            _brandRepository = brandRepository;
+            _brandService = brandService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var brands = await _brandRepository.GetAllAsync();
+            var brands = await _brandService.GetAllBrandsAsync();
 
             return View(brands);
         }
@@ -42,8 +44,12 @@ namespace AutoHub.Controllers
             }
 
             bool isFoundedDateValid = DateTime
-                 .TryParseExact(brandModel.FoundedDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None,
-                 out DateTime foundedDate);
+                 .TryParseExact(
+                brandModel.FoundedDate, 
+                "MM/dd/yyyy", 
+                CultureInfo.InvariantCulture, 
+                DateTimeStyles.None,
+                out DateTime foundedDate);
 
             if (!isFoundedDateValid)
             {
@@ -51,7 +57,7 @@ namespace AutoHub.Controllers
                 return this.View(brandModel);
             }
 
-            Brand brand = new Brand()
+            var brandDto = new BrandDto
             {
                 Name = brandModel.Name,
                 FoundedBy = brandModel.FoundedBy,
@@ -60,9 +66,8 @@ namespace AutoHub.Controllers
                 ImageUrl = brandModel.ImageUrl
             };
 
-            await _brandRepository.AddAsync(brand);
-            await _brandRepository.SaveChangesAsync();
-
+            await _brandService.AddBrandAsync(brandDto);
+           
             return RedirectToAction(nameof(Index));
         }
 
@@ -75,14 +80,14 @@ namespace AutoHub.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            var brand = await _brandRepository.GetIdAndVerifyAsync(guidId);
+            var brand = await _brandService.GetBrandByIdAsync(guidId);
 
             if (brand == null) 
             {
                 return RedirectToAction(nameof(Index));
             }
 
-            return this.View(brand);
+            return View(brand);
         }
     }
 }
