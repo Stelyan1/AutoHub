@@ -1,5 +1,6 @@
 ﻿@using AutoHub.Data.Models
-@model Model
+@using AutoHub.Infrastructure.DTOs
+@model ModelDto
 
 <div class="container mt-4">
     
@@ -22,7 +23,7 @@
                 <p><strong>Horsepower:</strong> @Model.HorsePower HP</p>
                 <p><strong>Fuel Type:</strong> @Model.FuelType</p>
                 <p><strong>Gas Consumption:</strong> @Model.GasConsumption L/100km</p>
-                <p><strong>Brand:</strong> @Model.Brand.Name</p>
+                <p><strong>Brand:</strong> @Model.BrandName</p>
             </div>
         </div>
     </div>

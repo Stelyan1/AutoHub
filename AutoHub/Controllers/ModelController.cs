@@ -1,6 +1,8 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
+using AutoHub.Infrastructure.DTOs;
 using AutoHub.Infrastructure.Repositories.Interfaces;
+using AutoHub.Infrastructure.Services.Interfaces;
 using AutoHub.Web.ViewModels.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,27 +13,23 @@ namespace AutoHub.Controllers
 {
     public class ModelController : Controller
     {
-        private readonly AutoHubDbContext dbContext;
-        private readonly IModelRepository _modelRepository;
-        private readonly IBaseRepository<Brand> _brandRepository;
+        private readonly IModelService _modelService;
+        private readonly IBrandService _brandService;
+        private readonly IBrandRepository _brandRepository;
 
-        public ModelController(IModelRepository modelRepository, IBaseRepository<Brand> brandRepository)
+        public ModelController(IModelService modelService, IBrandService brandService, IBrandRepository brandRepository)
         {
-            _modelRepository = modelRepository;
+            _modelService = modelService;
+            _brandService = brandService;
             _brandRepository = brandRepository;
         }
 
         [HttpGet]
         public async Task <IActionResult> Index()
         {
-            var models = await _modelRepository.GetAllAsync();
+            var models = await _modelService.GetAllModelsAsync();
 
             return View(models);
-            //IEnumerable<Model> allModels = this.dbContext
-            //    .Models
-            //    .ToList();
-
-            //return View(allModels);
         }
 
         [HttpGet]
@@ -39,14 +37,12 @@ namespace AutoHub.Controllers
         public async Task<IActionResult> Create() 
         {
             var brands = await _brandRepository.GetAllAsync();
-            
 
-            var modelViewModel = new ModelViewModel
+            var brandViewModel = new ModelViewModel
             {
                 Brands = brands.ToList()
             };
-
-            return View(modelViewModel);
+            return View(brandViewModel);
         }
 
         [HttpPost]
@@ -55,7 +51,7 @@ namespace AutoHub.Controllers
         {
             if (ModelState.IsValid) 
             {
-                var newModel = new Model
+                var modelDto = new ModelDto
                 {
                     Name = model.Name,
                     Year = model.Year,
@@ -66,11 +62,9 @@ namespace AutoHub.Controllers
                     ImageUrl = model.ImageUrl,
                     BrandId = model.SelectedBrand
                 };
-
-                await _modelRepository.AddAsync(newModel);
-                await _modelRepository.SaveChangesAsync();
                
-
+                await _modelService.AddModelAsync(modelDto);
+                
                 return RedirectToAction(nameof(Index));
             }
 
@@ -88,7 +82,7 @@ namespace AutoHub.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            var model = await _modelRepository.GetIdAndVerifyAsync(guidId);
+            var model = await _modelService.GetModelByIdAsync(guidId);
 
             if (model == null) 
             {

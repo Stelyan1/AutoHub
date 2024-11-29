@@ -1,11 +1,11 @@
-﻿@using AutoHub.Data.Models
-@model IEnumerable<AutoHub.Data.Models.Model>
+﻿@using AutoHub.Infrastructure.DTOs
+@model IEnumerable<AutoHub.Infrastructure.DTOs.ModelDto>
 
 <h2 class="text-center">All Models</h2>
 
 <div class="container">
     <div class="row">
-        @foreach (Model models in Model)
+        @foreach (ModelDto models in Model)
         {
             <div class="col-md-4 mb-4">
                 <div class="card text-center">
