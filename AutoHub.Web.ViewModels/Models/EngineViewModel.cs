@@ -31,9 +31,11 @@ namespace AutoHub.Web.ViewModels.Models
              = new List<Model>();
 
         [Required(ErrorMessage = CylindersMsg)]
+        [Range(3, 16, ErrorMessage = "Every engine has at least 3 and 16 maximum")]
         public int Cylinders { get; set; }
 
         [Required(ErrorMessage = ValveTrainDriveSystemMsg)]
+        [RegularExpression(@"^(Chain|Gear|Belt)$", ErrorMessage = "Must be Chain,Gear or Belt")]
         [MinLength(ValveTrainMinLength)]
         [MaxLength(ValveTrainMaxLength)]
         public string ValveTrainDriveSystem { get; set; } = null!;

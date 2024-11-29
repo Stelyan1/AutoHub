@@ -1,11 +1,11 @@
-﻿@using AutoHub.Data.Models
-@model IEnumerable<AutoHub.Data.Models.Engine>
+﻿@using AutoHub.Infrastructure.DTOs
+@model IEnumerable<AutoHub.Infrastructure.DTOs.EngineDto>
 
 <h2 class="text-center">All Engines</h2>
 
 <div class="container">
     <div class="row">
-        @foreach (Engine engines in Model)
+        @foreach (EngineDto engines in Model)
         {
             <div class="col-md-4 mb-4">
                 <div class="card text-center">

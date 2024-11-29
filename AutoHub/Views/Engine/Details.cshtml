@@ -1,5 +1,5 @@
-﻿@using AutoHub.Data.Models
-@model Engine
+﻿@using AutoHub.Infrastructure.DTOs
+@model EngineDto
 
 <div class="container mt-4">
 
@@ -17,10 +17,10 @@
             <div class="card p-5">
                 <h2 class="text-center">@Model.Name</h2>
 
-                <p><strong>Brand:</strong> @Model.Brand.Name</p>
-                <p><strong>Application:</strong> @Model.Model.Name</p>
+                <p><strong>Brand:</strong> @Model.BrandName</p>
+                <p><strong>Application:</strong> @Model.ModelName</p>
                 <p><strong>Cylinders:</strong> @Model.Cylinders</p>
-                <p><strong>ValveTrainDriveSystem:</strong> @Model.ValvetrainDriveSystem</p>
+                <p><strong>ValveTrainDriveSystem:</strong> @Model.ValveTrainDriveSystem</p>
                 <p><strong>PowerOutput:</strong> @Model.PowerOutput</p>
                 <p><strong>Torque:</strong> @Model.Torque</p>
                 <p><strong>RPM:</strong> @Model.Rpm</p>

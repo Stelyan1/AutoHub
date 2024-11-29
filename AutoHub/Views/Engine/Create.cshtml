@@ -27,26 +27,31 @@
     </div>
     <div>
         <label for="Cylinders">Cylinders</label>
+        <small class="text-muted">Type in between 3 to 16</small>
         <input asp-for="Cylinders" class="form-control" />
         <span asp-validation-for="Cylinders" class="text-danger"></span>
     </div>
     <div>
         <label for="ValveTrainDriveSystem">ValveTrainDriveSystem</label>
+        <small class="text-muted">Type in Chain,Belt or Gear</small>
         <input asp-for="ValveTrainDriveSystem" class="form-control" />
         <span asp-validation-for="ValveTrainDriveSystem" class="text-danger"></span>
     </div>
     <div>
         <label for="PowerOutput">PowerOutput</label>
+        <small class="text-muted">Format: 125-300hp</small>
         <input asp-for="PowerOutput" class="form-control" />
         <span asp-validation-for="PowerOutput" class="text-danger"></span>
     </div>
     <div>
         <label for="Torque">Torque</label>
+        <small class="text-muted">Format: 250-300Nm</small>
         <input asp-for="Torque" class="form-control" />
         <span asp-validation-for="Torque" class="text-danger"></span>
     </div>
     <div>
         <label for="Rpm">Rpm</label>
+        <small class="text-muted">Format: 1250-3250Rpm</small>
         <input asp-for="Rpm" class="form-control" />
         <span asp-validation-for="Rpm" class="text-danger"></span>
     </div>
@@ -57,6 +62,7 @@
     </div>
     <div>
         <label for="YearsProduction">YearsProduction</label>
+        <small class="text-muted">Format: 2005-2016</small>
         <input asp-for="YearsProduction" class="form-control" />
         <span asp-validation-for="YearsProduction" class="text-danger"></span>
     </div>

@@ -31,7 +31,7 @@
             public const byte EngineNameMinLength = 3;
             public const byte EngineNameMaxLength = 40;
 
-            public const byte ValveTrainMinLength = 5;
+            public const byte ValveTrainMinLength = 4;
             public const byte ValveTrainMaxLength = 5;
 
             public const byte PowerOutputMinLength = 6;

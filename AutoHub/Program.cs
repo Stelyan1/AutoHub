@@ -68,6 +68,7 @@ namespace AutoHub
             //Registering services in DI
             builder.Services.AddScoped<IBrandService, BrandService>();
             builder.Services.AddScoped<IModelService, ModelService>();
+            builder.Services.AddScoped<IEngineService, EngineService>();
 
             var app = builder.Build();
 

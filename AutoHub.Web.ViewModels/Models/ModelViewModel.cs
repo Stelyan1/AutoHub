@@ -19,12 +19,15 @@ namespace AutoHub.Web.ViewModels.Models
         public string Name { get; set; } = null!;
 
         [Required(ErrorMessage = YearIsRequired)]
+        [Range(1955, 2027, ErrorMessage = "Pick up cars from 1955 and above to 2027 in future production")]
         public int Year { get; set; } 
 
         [Required(ErrorMessage = HorsePowerRequired)]
+        [Range(10, 2000, ErrorMessage = "HorsePower must be at least 10hp and 2000hp maximum")]
         public int HorsePower { get; set; }
 
         [Required(ErrorMessage = FuelTypeRequired)]
+        [RegularExpression(@"^(Petrol|Diesel)$", ErrorMessage = "Fuel Type must be either Petrol or Diesel.")]
         [MinLength(FuelTypeMinLength)]
         [MaxLength(FuelTypeMaxLength)]
         public string FuelType { get; set; } = null!;

@@ -11,11 +11,13 @@
     </div>
     <div>
         <label for="Year">Year</label>
+        <small class="text-muted">Pickup car from 1955 to 2027 future production</small>
         <input asp-for="Year" class="form-control" />
         <span asp-validation-for="Year" class="text-danger"></span>
     </div>
     <div>
         <label for="HorsePower">HorsePower</label>
+        <small class="text-muted">Type between 10hp and 2000hp</small>
         <input asp-for="HorsePower" class="form-control" />
         <span asp-validation-for="HorsePower" class="text-danger"></span>
     </div>
@@ -27,6 +29,7 @@
     </div>
     <div>
         <label for="GasConsumption">GasConsumption</label>
+        <small class="text-muted">Type between 4 and 20 per 100km</small>
         <input asp-for="GasConsumption" class="form-control" />
         <span asp-validation-for="GasConsumption" class="text-danger"></span>
     </div>

@@ -14,13 +14,11 @@ namespace AutoHub.Controllers
     public class ModelController : Controller
     {
         private readonly IModelService _modelService;
-        private readonly IBrandService _brandService;
         private readonly IBrandRepository _brandRepository;
 
-        public ModelController(IModelService modelService, IBrandService brandService, IBrandRepository brandRepository)
+        public ModelController(IModelService modelService,IBrandRepository brandRepository)
         {
             _modelService = modelService;
-            _brandService = brandService;
             _brandRepository = brandRepository;
         }
 

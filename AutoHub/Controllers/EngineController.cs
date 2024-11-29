@@ -1,6 +1,8 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
+using AutoHub.Infrastructure.DTOs;
 using AutoHub.Infrastructure.Repositories.Interfaces;
+using AutoHub.Infrastructure.Services.Interfaces;
 using AutoHub.Web.ViewModels.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +12,13 @@ namespace AutoHub.Controllers
 {
     public class EngineController : Controller
     {
-        private readonly IEngineRepository _engineRepository;
+        private readonly IEngineService _engineService;
         private readonly IBaseRepository<Model> _modelRepository;
         private readonly IBaseRepository<Brand> _brandRepository;
 
-        public EngineController(IEngineRepository engineRepository, IBaseRepository<Model> modelRepository, IBaseRepository<Brand> brandRepository)
+        public EngineController(IEngineService engineService, IBaseRepository<Model> modelRepository, IBaseRepository<Brand> brandRepository)
         {
-            _engineRepository = engineRepository;
+            _engineService = engineService;
             _modelRepository = modelRepository;
             _brandRepository = brandRepository;
         }
@@ -24,7 +26,7 @@ namespace AutoHub.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var engines = await _engineRepository.GetAllAsync();
+            var engines = await _engineService.GetAllEnginesAsync();
             return View(engines);
         }
 
@@ -49,13 +51,13 @@ namespace AutoHub.Controllers
         {
             if (ModelState.IsValid) 
             {
-                var newEngine = new Engine
+                var engineDto = new EngineDto
                 {
                     Name = model.Name,
                     BrandId = model.Manufacturer,
                     ModelId = model.Application,
                     Cylinders = model.Cylinders,
-                    ValvetrainDriveSystem = model.ValveTrainDriveSystem,
+                    ValveTrainDriveSystem = model.ValveTrainDriveSystem,
                     PowerOutput = model.PowerOutput,
                     Torque = model.Torque,
                     Rpm = model.Rpm,
@@ -63,9 +65,8 @@ namespace AutoHub.Controllers
                     YearsProduction = model.YearsProduction
                 };
 
-                await _engineRepository.AddAsync(newEngine);
-                await _engineRepository.SaveChangesAsync();
-               
+                await _engineService.AddEngineAsync(engineDto);
+                
                 return RedirectToAction(nameof(Index));
             }
 
@@ -85,14 +86,14 @@ namespace AutoHub.Controllers
                 return RedirectToAction(nameof(Index));
             }
             
-            var engines = await _engineRepository.GetIdAndVerifyAsync(guidId);
+            var engines = await _engineService.GetEngineByIdAsync(guidId);
 
             if (engines == null) 
             {
                 return RedirectToAction(nameof(Index));
             }
 
-            return this.View(engines);
+            return View(engines);
         }
     }
 }
