@@ -69,6 +69,7 @@ namespace AutoHub
             builder.Services.AddScoped<IBrandService, BrandService>();
             builder.Services.AddScoped<IModelService, ModelService>();
             builder.Services.AddScoped<IEngineService, EngineService>();
+            builder.Services.AddScoped<IGearboxService, GearboxService>();
 
             var app = builder.Build();
 

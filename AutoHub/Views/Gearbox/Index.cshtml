@@ -1,11 +1,11 @@
-﻿@using AutoHub.Data.Models
-@model IEnumerable<AutoHub.Data.Models.Gearbox>
+﻿@using AutoHub.Infrastructure.DTOs
+@model IEnumerable<AutoHub.Infrastructure.DTOs.GearboxDto>
 
 <h2 class="text-center">All Gearboxes</h2>
 
 <div class="container">
     <div class="row">
-        @foreach (Gearbox gearboxes in Model)
+        @foreach (GearboxDto gearboxes in Model)
         {
             <div class="col-md-4 mb-4">
                 <div class="card text-center">

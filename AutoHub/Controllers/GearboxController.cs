@@ -1,6 +1,8 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
+using AutoHub.Infrastructure.DTOs;
 using AutoHub.Infrastructure.Repositories.Interfaces;
+using AutoHub.Infrastructure.Services.Interfaces;
 using AutoHub.Web.ViewModels.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,19 +12,19 @@ namespace AutoHub.Controllers
 {
     public class GearboxController : Controller
     {
-        private readonly IGearboxRepository _gearboxRepository;
+        private readonly IGearboxService _gearboxService;
         private readonly IBaseRepository<Model> _modelRepository;
 
-        public GearboxController(IGearboxRepository gearboxRepository, IBaseRepository<Model> modelRepository)
+        public GearboxController(IGearboxService gearboxService, IBaseRepository<Model> modelRepository)
         {
-            _gearboxRepository = gearboxRepository;
+            _gearboxService = gearboxService;
             _modelRepository = modelRepository;    
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var gearboxes = await _gearboxRepository.GetAllAsync();
+            var gearboxes = await _gearboxService.GetAllGearboxesAsync();
             return View(gearboxes);
         }
 
@@ -31,6 +33,7 @@ namespace AutoHub.Controllers
         public async Task<IActionResult> Create() 
         {
             var modelApplication = await _modelRepository.GetAllAsync();
+
             var gearboxViewModel = new GearboxViewModel
             {
                 Models = modelApplication.ToList()
@@ -45,7 +48,7 @@ namespace AutoHub.Controllers
         {
             if (ModelState.IsValid) 
             {
-                var newGearbox = new Gearbox
+                var gearboxDto = new GearboxDto
                 {
                     Name = model.Name,
                     TransmissionType = model.TransmissionType,
@@ -57,9 +60,8 @@ namespace AutoHub.Controllers
                     Application = model.Application
                 };
 
-                await _gearboxRepository.AddAsync(newGearbox);
-                await _gearboxRepository.SaveChangesAsync();
-
+                await _gearboxService.AddGearboxAsync(gearboxDto);
+            
                 return RedirectToAction(nameof(Index));
             }
 
@@ -77,7 +79,7 @@ namespace AutoHub.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var gearbox = await _gearboxRepository.GetByIdVerifyAsync(guidId);
+            var gearbox = await _gearboxService.GetGearboxesByIdAsync(guidId);
             
             if (gearbox == null)
             {

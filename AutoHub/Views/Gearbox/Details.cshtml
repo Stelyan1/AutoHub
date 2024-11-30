@@ -1,5 +1,5 @@
-﻿@using AutoHub.Data.Models
-@model Gearbox
+﻿@using AutoHub.Infrastructure.DTOs
+@model GearboxDto
 
 <div class="container mt-4">
 
@@ -19,7 +19,7 @@
 
                 <p><strong>Manufacturer:</strong> @Model.Manufacturer</p>
                 <p><strong>Name:</strong> @Model.Name</p>
-                <p><strong>Application:</strong> @Model.Model.Name</p>
+                <p><strong>Application:</strong> @Model.ApplicationName</p>
                 <p><strong>Transmission type:</strong> @Model.TransmissionType</p>
                 <p><strong>Speeds:</strong> @Model.Speeds</p>
                 <p><strong>Years Produced:</strong> @Model.YearsProduced</p>
