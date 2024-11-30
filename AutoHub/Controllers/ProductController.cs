@@ -1,31 +1,35 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
+using AutoHub.Infrastructure.DTOs;
 using AutoHub.Infrastructure.Repositories.Interfaces;
+using AutoHub.Infrastructure.Services.Interfaces;
 using AutoHub.Web.ViewModels.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using static AutoHub.Common.EntityValidationConstants;
 
 namespace AutoHub.Controllers
 {
     public class ProductController : Controller
     {
+        private readonly IProductService _productService;
         private readonly IProductRepository _productRepository;
-        private readonly IBaseRepository<Category> _categoryRepository;
-        private readonly AutoHubDbContext dbContext;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public ProductController(IProductRepository productRepository, IBaseRepository<Category> categoryRepository)
+        public ProductController(IProductService productService, IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
+            _productService = productService;
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
         }
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index() 
         {
-            var products = await _productRepository.GetProductsAsync(GetSellerId());
+            var products = await _productService.GetAllProductsAsync(GetSellerId());
             return View(products);
            
         }
@@ -34,16 +38,19 @@ namespace AutoHub.Controllers
         [Authorize]
         public async Task<IActionResult> Create() 
         {
-            var categories = await _productRepository.GetCategoriesAsync();
+            var categories = await _categoryRepository.GetAllAsync();
 
-            var productViewModel = new ProductViewModel { Categories = (ICollection<Category>)categories };
-
+            var productViewModel = new ProductViewModel
+            {
+                Categories = categories.ToList()
+            };
+           
             return View(productViewModel);
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create(ProductViewModel model)
+        public async Task<IActionResult> Create(ProductViewModel model) 
         {
             if (!ModelState.IsValid)
             {
@@ -51,49 +58,57 @@ namespace AutoHub.Controllers
                 return View(model);
             }
 
-            
-                var product = new Product
-                {
-                    ProductName = model.ProductName,
-                    Manufacturer = model.Manufacturer,
-                    CategoryId = model.CategoryId,
-                    CarsApplication = model.CarsApplication,
-                    Description = model.Description,
-                    Price = model.Price,
-                    ImageUrl = model.ImageUrl,
-                    SellerId = GetSellerId(),
-                    AddedOn = model.AddedOn
-                };
-
-                await _productRepository.CreateProductAsync(product);
-                await _productRepository.SaveChangesAsync();
-
-           return RedirectToAction(nameof(Index));
+            var productDto = new ProductDto
+            {
+                ProductName = model.ProductName,
+                Manufacturer = model.Manufacturer,
+                CategoryId = model.CategoryId,
+                CarsApplication = model.CarsApplication,
+                Description = model.Description,
+                Price = model.Price,
+                ImageUrl = model.ImageUrl,
+                SellerId = GetSellerId(),
+                AddedOn = model.AddedOn
+            };
+               
+            await _productService.AddProductAsync(productDto);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Details(string id) 
+        public async Task<IActionResult> Details(Guid id) 
         {
-            bool isValid = Guid.TryParse(id, out Guid guidId);
-            if (!isValid)
+            var productDto = await _productService.GetProductByIdAsync(id);
+
+            if(productDto == null)
             {
-                return this.RedirectToAction(nameof(Index));
+                return NotFound();
             }
 
-            var product = await _productRepository.GetProductDetailsAsync(guidId);
-
-            if (product == null) 
+            var model = new ProductDetailsViewModel
             {
-                return RedirectToAction(nameof(Index));
-            }
-                
-          return View(product);
+                Id = productDto.Id,
+                ProductName = productDto.ProductName,
+                Manufacturer = productDto.Manufacturer,
+                CategoryId = productDto.CategoryId,
+                CarsApplication = productDto.CarsApplication,
+                Description = productDto.Description,
+                Price = productDto.Price,
+                ImageUrl = productDto.ImageUrl,
+                AddedOn = productDto.AddedOn,
+                SellerName = productDto.SellerName,
+                CategoryName = productDto.CategoryName
+         
+            };
+
+            return View(model);
+          
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Buy(string id)
+        public async Task<IActionResult> Buy(string id) 
         {
             bool isValid = Guid.TryParse(id, out Guid guidId);
             if (!isValid)
@@ -101,7 +116,7 @@ namespace AutoHub.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            if (await _productRepository.ProductExistsAsync(guidId, GetSellerId()))
+            if (await _productService.ProductExistsAsync(guidId, GetSellerId()))
             {
                 return RedirectToAction(nameof(Cart));
             }
@@ -112,9 +127,9 @@ namespace AutoHub.Controllers
                 ClientId = GetSellerId(),
             };
 
-            await _productRepository.AddToCartAsync(productClient);
+            await _productService.AddToCartAsync(productClient);
             await _productRepository.SaveChangesAsync();
-
+               
             return RedirectToAction(nameof(Cart));
         }
 
@@ -122,13 +137,13 @@ namespace AutoHub.Controllers
         [Authorize]
         public async Task<IActionResult> Cart() 
         {
-            var cartProducts = await _productRepository.GetCartProductsAsync(GetSellerId());
+            var cartProducts = await _productService.GetCartProductsAsync(GetSellerId());
             return View(cartProducts);
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> RemoveFromCart(string id)
+        public async Task<IActionResult> RemoveFromCart(string id) 
         {
             bool isValid = Guid.TryParse(id, out Guid guidId);
 
@@ -137,7 +152,7 @@ namespace AutoHub.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            await _productRepository.RemoveFromCartAsync(guidId, GetSellerId());
+            await _productService.RemoveFromCartAsync(guidId, GetSellerId());
             await _productRepository.SaveChangesAsync();
 
             return RedirectToAction(nameof(Cart));
@@ -154,14 +169,14 @@ namespace AutoHub.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            var product = await _productRepository.GetProductByIdAsync(guidId);
+            var product = await _productService.GetProductByIdAsync(guidId);
             //Caution
             if (product == null || product.IsDeleted)
             {
                 return RedirectToAction(nameof(Index));
             }
 
-            var productViewModel = new ProductViewModel
+            var productDto = new ProductDto
             {
                 Id = product.Id,
                 ProductName = product.ProductName,
@@ -174,41 +189,36 @@ namespace AutoHub.Controllers
                 AddedOn = product.AddedOn
             };
 
-            productViewModel.Categories = (await _categoryRepository.GetAllAsync()).ToList();
+            productDto.Categories = (await _categoryRepository.GetAllAsync()).ToList();
 
-            return View(productViewModel);
+            return View(productDto);
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Edit(ProductViewModel model) 
+        public async Task<IActionResult> Edit(ProductViewModel model)  
         {
-            if (!ModelState.IsValid)
+     
+            if (ModelState.IsValid)
             {
-                model.Categories = (ICollection<Category>)await _categoryRepository.GetAllAsync();
+                var productDtoUpdate = new ProductDto
+                {
+                    Id = model.Id,
+                    ProductName = model.ProductName,
+                    Manufacturer = model.Manufacturer,
+                    CategoryId = model.CategoryId,
+                    CarsApplication = model.CarsApplication,
+                    Description = model.Description,
+                    Price = model.Price,
+                    ImageUrl = model.ImageUrl,
+                    AddedOn = model.AddedOn
+                };
 
-                return View(model);
+                await _productService.UpdateProductAsync(productDtoUpdate);
+                return RedirectToAction("Details", new { id = model.Id });
             }
 
-            var product = await _productRepository.GetByIdAsync(model.Id);
-            if (product == null || product.IsDeleted)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
-            product.ProductName = model.ProductName;
-            product.Manufacturer = model.Manufacturer;
-            product.CategoryId = model.CategoryId;
-            product.CarsApplication = model.CarsApplication;
-            product.Description = model.Description;
-            product.Price = model.Price;
-            product.ImageUrl = model.ImageUrl;
-            product.AddedOn = model.AddedOn;
-
-            _productRepository.Update(product);
-            await _productRepository.SaveChangesAsync();
-
-            return RedirectToAction("Details", new { id = product.Id });
+            return View(model);
         }
 
         [HttpGet]
@@ -221,37 +231,38 @@ namespace AutoHub.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            var product = await _productRepository.GetByIdWithSellerAsync(guidId);
+            var product = await _productService.GetByIdWithSellerAsync(guidId);
 
-            if (product == null) 
+            if (product == null)
             {
                 return RedirectToAction(nameof(Index));
             }
 
-            var productDeleteViewModel = new ProductDeleteViewModel
+            var productDto = new ProductDto
             {
                 Id = product.Id,
                 ProductName = product.ProductName,
                 SellerId = product.SellerId,
-                Seller = product.Seller?.UserName ?? string.Empty
+                SellerName = product.Seller?.UserName ?? string.Empty
             };
 
-            return View(productDeleteViewModel);
+            return View(productDto);
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Delete (ProductDeleteViewModel model)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var product = await _productRepository.GetByIdAsync(model.Id);
-
-            if (product != null)
+          
+            try
             {
-                product.IsDeleted = true;
-                _productRepository.Delete(product);
-                await _productRepository.SaveChangesAsync();
+                await _productService.DeleteProductsAsync(id);
+                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            catch (Exception) 
+            {
+                return NotFound();
+            }
         }
         private string GetSellerId()
         {

@@ -24,5 +24,6 @@ namespace AutoHub.Infrastructure.Repositories.Interfaces
         Task<ProductDeleteViewModel?> GetProductForDeleteAsync(Guid productId);
         Task DeleteProductAsync(Guid productId);
         Task<Product?> GetByIdWithSellerAsync(Guid id);
+        Task<Product?> GetIdAndVerifyAsync(Guid id);
     }
 }

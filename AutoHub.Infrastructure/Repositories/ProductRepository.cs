@@ -127,6 +127,13 @@ namespace AutoHub.Infrastructure.Repositories
             }
         }
 
+        public async Task<Product?> GetIdAndVerifyAsync(Guid id)
+        {
+            return await _dbSet
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
         public async Task UpdateProductAsync(Product product)
         {
             _dbContext.Products.Update(product);
