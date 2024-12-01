@@ -4,6 +4,7 @@ using AutoHub.Data;
 namespace AutoHub
 {
     using AutoHub.Data;
+    using AutoHub.Data.Configuration;
     using AutoHub.Data.Models;
     using AutoHub.Infrastructure.Repositories;
     using AutoHub.Infrastructure.Repositories.Interfaces;
@@ -29,7 +30,8 @@ namespace AutoHub
             });
 
             // Add Identity services
-            builder.Services.AddDefaultIdentity<IdentityUser>(cfg =>
+            builder.Services
+             .AddDefaultIdentity<IdentityUser>(cfg =>
             {
                 cfg.Password.RequireDigit = true;
 
@@ -45,8 +47,6 @@ namespace AutoHub
 
                 cfg.SignIn.RequireConfirmedAccount = false;
 
-                cfg.SignIn.RequireConfirmedAccount = false;
-
                 cfg.SignIn.RequireConfirmedPhoneNumber = false;
 
                 cfg.User.RequireUniqueEmail = false;
@@ -55,6 +55,7 @@ namespace AutoHub
                 cfg.Lockout.MaxFailedAccessAttempts = 3;
                 cfg.Lockout.AllowedForNewUsers = true;
             })
+            .AddRoles <IdentityRole>()
             .AddEntityFrameworkStores<AutoHubDbContext>();
 
             //Registering repos in DI
@@ -75,6 +76,22 @@ namespace AutoHub
 
             var app = builder.Build();
 
+            //Seeding Roles
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    var context = services.GetRequiredService<AutoHubDbContext>();
+                    DatabaseSeeder.SeedAsync(context, services).GetAwaiter().GetResult();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"An error occurred during role seeding: {ex.Message}");
+                }
+            }
+
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -94,6 +111,11 @@ namespace AutoHub
 
             // Enable Identity's Razor Pages for login, register 
             app.MapRazorPages();
+
+            app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
 
             app.MapControllerRoute(
                 name: "default",
