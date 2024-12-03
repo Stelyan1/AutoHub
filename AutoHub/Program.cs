@@ -85,6 +85,7 @@ namespace AutoHub
                 {
                     var context = services.GetRequiredService<AutoHubDbContext>();
                     DatabaseSeeder.SeedAsync(context, services).GetAwaiter().GetResult();
+                    DatabaseSeeder.AssignAdminRole(context, services).GetAwaiter().GetResult();
                 }
                 catch (Exception ex)
                 {

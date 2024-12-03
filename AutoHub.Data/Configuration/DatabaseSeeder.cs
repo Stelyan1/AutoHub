@@ -27,5 +27,49 @@ namespace AutoHub.Data.Configuration
                 }
             }
         }
+
+        public static async Task AssignAdminRole(AutoHubDbContext context, IServiceProvider serviceProvider) 
+        {
+            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            string adminEmail = "admin@gmail.com";
+            string adminUsername = "Admin";
+            string adminPassword = "Admin123Ww";
+
+            if (!await roleManager.RoleExistsAsync("Admin"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+
+            var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
+            if (adminUser == null) 
+            {
+                adminUser = new IdentityUser
+                {
+                    UserName = adminUsername,
+                    Email = adminEmail,
+                    EmailConfirmed = true
+                };
+
+                var createUserResult = await userManager.CreateAsync(adminUser, adminPassword);
+
+                if (!createUserResult.Succeeded) 
+                {
+                    throw new Exception($"Failed to create Admin user");
+                }
+            }
+
+            if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+            {
+                var addToRoleResult = await userManager.AddToRoleAsync(adminUser, "Admin");
+
+                if (!addToRoleResult.Succeeded)
+                {
+                    throw new Exception($"Failed to assign Admin role");
+                }
+            }
+        }
     }
 }
