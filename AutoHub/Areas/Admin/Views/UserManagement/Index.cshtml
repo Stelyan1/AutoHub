@@ -1,0 +1,60 @@
+﻿@model IEnumerable<AutoHub.Areas.Admin.ViewModels.UserManageViewModel>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">User Management</h1>
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>Email</th>
+                <th>UserName</th>
+                <th>UserRoles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@user.UserName</td>
+                    <td>
+                        @foreach (var role in user.UserRoles)
+                        {
+                            <span class="badge bg-secondary">@role</span>
+                        }
+                    </td>
+                    <td>
+                        <!-- Assign Role Form -->
+                        <form method="post" asp-controller="UserManage" asp-area="Admin" asp-action="AssignRole" class="d-inline">
+                            <input type="hidden" name="userId" value="@user.UserId" />
+                            <select name="roleId" class="form-select d-inline w-auto">
+                                <option value="Admin">Admin</option>
+                                <option value="User">User</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm">Assign</button>
+                        </form>
+
+                        <!-- Remove Role Form -->
+                        <form method="post" asp-controller="UserManage" asp-area="Admin" asp-action="RemoveRole" class="d-inline ms-2">
+                            <input type="hidden" name="userId" value="@user.UserId" />
+                            <select name="roleName" class="form-select d-inline w-auto">
+                                @foreach (var role in user.UserRoles)
+                                {
+                                    <option value="@role">@role</option>
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-warning btn-sm">Remove</button>
+                        </form>
+
+                        <!-- Delete User Form -->
+                        <form method="post" asp-controller="UserManage" asp-area="Admin" asp-action="DeleteUser" class="d-inline ms-2">
+                            <input type="hidden" name="userId" value="@user.UserId" />
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

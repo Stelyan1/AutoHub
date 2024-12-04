@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Admin Management";
+
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+
+<div class="container text-center mt-5">
+    <h1 class="display-4 mb-4">Admin Management</h1>
+    <hr />
+    <div class="mt-4">
+        <h3>Manage</h3>
+        <div class="d-flex justify-content-center flex-wrap mt-3">
+            <a asp-area="Admin" asp-controller="UserManage" asp-action="Index" class="btn btn-primary m-2" style="width: 150px;">User Roles</a>
+            <a href="/Brand" class="btn btn-primary m-2" style="width: 150px;">Brands</a>
+            <a href="/Model" class="btn btn-primary m-2" style="width: 150px;">Models</a>
+            <a href="/Engine" class="btn btn-primary m-2" style="width: 150px;">Engines</a>
+            <a href="/Gearbox" class="btn btn-primary m-2" style="width: 150px;">Gearboxes</a>
+            <a href="/Product" class="btn btn-primary m-2" style="width: 150px;">Products</a>
+        </div>
+    </div>
+</div>

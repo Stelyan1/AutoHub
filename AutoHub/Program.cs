@@ -108,6 +108,9 @@ namespace AutoHub
 
             // Add Authorization and Authentication middleware
             app.UseAuthentication();
+
+            //TODO add Middleware for pages redirect based on the role of the user
+
             app.UseAuthorization();
 
             // Enable Identity's Razor Pages for login, register 
