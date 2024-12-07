@@ -39,14 +39,14 @@
 
                         <p><strong>@models.Price BGN</strong></p>
                         <div class="mt-auto">
-                            @if (!models.HasBought && !models.IsSeller)
+                            @if (!models.HasBought && !models.IsSeller && !User.IsInRole("Admin"))
                             {
                                 <form asp-controller="Product" asp-action="Buy" asp-route-id="@models.Id" method="post" style="display:inline;">
                                     <button type="submit" class="btn custom-green">Buy</button>
                                 </form>
                                 <a href="@Url.Action("Details", "Product", new { id = models.Id })" class="btn btn-primary">Details</a>
                             }
-                            else if(models.IsSeller)
+                            else if(models.IsSeller || User.IsInRole("Admin"))
                             {
                                 <a href="@Url.Action("Edit", "Product", new { id = models.Id })" class="btn custom-black">Edit</a>
                                 <a href="@Url.Action("Details", "Product", new { id = models.Id })" class="btn btn-primary">Details</a>
