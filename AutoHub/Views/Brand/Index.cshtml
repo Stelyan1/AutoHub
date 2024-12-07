@@ -1,6 +1,22 @@
 ﻿@using AutoHub.Infrastructure.DTOs
 @model IEnumerable<AutoHub.Infrastructure.DTOs.BrandDto>
 
+<style>
+
+    .btn {
+        display: inline-block;
+        padding: 5px 15px;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 4px;
+        min-width: 100px; /* Ensures all buttons are at least this wide */
+    }
+    .custom-red {
+        background-color: #c90404;
+        color: white;
+        border: none;
+    }
+</style>
 
 <p class="h3">All Brands</p>
 
@@ -24,7 +40,11 @@
                 <td>@brand.FoundedDate.ToString("MMMM/dd/yyyy")</td>
                 <td class="truncate">@brand.Description</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@brand.Id" class="btn btn-info">Details</a>
+                 <a asp-action="Details" asp-route-id="@brand.Id" class="btn btn-primary">Details</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@brand.Id" class="btn custom-red">Delete</a>
+                    }
                 </td>
             </tr>
         }

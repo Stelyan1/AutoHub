@@ -35,6 +35,21 @@ namespace AutoHub.Infrastructure.Services
             await _brandRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteBrandAsync(Guid id)
+        {
+            var brand = await _brandRepository.GetIdAndVerifyAsync(id);
+
+            if (brand != null) 
+            {
+                _brandRepository.Delete(brand);
+                await _brandRepository.SaveChangesAsync();
+            }
+            else
+            {
+                throw new ArgumentException("Brand not found");
+            }
+        }
+
         public async Task<IEnumerable<BrandDto>> GetAllBrandsAsync()
         {
             var brands = await _brandRepository.GetAllAsync();

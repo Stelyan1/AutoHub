@@ -12,5 +12,6 @@ namespace AutoHub.Infrastructure.Services.Interfaces
        Task<IEnumerable<BrandDto>> GetAllBrandsAsync();
        Task<BrandDto?> GetBrandByIdAsync(Guid id);
        Task AddBrandAsync(BrandDto brandDto);
+       Task DeleteBrandAsync (Guid id);
     }
 }

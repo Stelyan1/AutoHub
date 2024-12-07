@@ -89,5 +89,50 @@ namespace AutoHub.Controllers
 
             return View(brand);
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Delete (string id)
+        {
+            bool isIdValid = Guid.TryParse(id, out Guid guidId);
+            if (!isIdValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            var brand = await _brandService.GetBrandByIdAsync(guidId);
+
+            if (brand == null) 
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var brandModel = new BrandDto
+            {
+                Id = brand.Id,
+                Name = brand.Name,
+                FoundedBy = brand.FoundedBy,
+                FoundedDate = brand.FoundedDate,
+                Description = brand.Description,
+                ImageUrl = brand.ImageUrl
+            };
+
+            return View(brandModel);
+        }
+        
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Delete (Guid id)
+        {
+            try
+            {
+                await _brandService.DeleteBrandAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
     }
 }
