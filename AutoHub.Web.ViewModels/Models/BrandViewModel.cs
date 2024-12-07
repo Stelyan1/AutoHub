@@ -11,6 +11,9 @@ namespace AutoHub.Web.ViewModels.Models
     using static AutoHub.Common.BrandModelErrorMessages.Brand;
     public class BrandViewModel
     {
+        [Required]
+        public Guid Id { get; set; }
+
         [Required(ErrorMessage = BrandNameIsRequired)]
         [MinLength(BrandNameMinLength)]
         [MaxLength(BrandNameMaxLength)]

@@ -84,5 +84,24 @@ namespace AutoHub.Infrastructure.Services
                 ImageUrl = brand.ImageUrl
             };
         }
+
+        public async Task UpdateBrandAsync(BrandDto brandDto)
+        {
+            var brand = await _brandRepository.GetByIdAsync(brandDto.Id);
+
+            if (brand == null)
+            {
+                throw new ArgumentException("Product not found");
+            }
+
+            brand.Name = brandDto.Name;
+            brand.FoundedBy = brandDto.FoundedBy;
+            brand.FoundedDate = brandDto.FoundedDate;
+            brand.Description = brandDto.Description;
+            brand.ImageUrl = brandDto.ImageUrl;
+
+            await _brandRepository.UpdateBrandAsync(brand);
+            await _brandRepository.SaveChangesAsync();
+        }
     }
 }

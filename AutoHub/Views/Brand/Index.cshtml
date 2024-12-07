@@ -16,6 +16,12 @@
         color: white;
         border: none;
     }
+
+    .custom-black {
+        background-color: #000000;
+        color: white;
+        border: none;
+    }
 </style>
 
 <p class="h3">All Brands</p>
@@ -43,7 +49,8 @@
                  <a asp-action="Details" asp-route-id="@brand.Id" class="btn btn-primary">Details</a>
                     @if (User.IsInRole("Admin"))
                     {
-                        <a asp-action="Delete" asp-route-id="@brand.Id" class="btn custom-red">Delete</a>
+                       <a asp-action="Delete" asp-route-id="@brand.Id" class="btn custom-red">Delete</a>
+                       <a asp-action="Edit" asp-route-id="@brand.Id" class="btn custom-black">Edit</a>
                     }
                 </td>
             </tr>
@@ -51,7 +58,7 @@
     </tbody>
 </table>
 
-@if (User.Identity.IsAuthenticated)
+@if (User.IsInRole("Admin"))
 {
     <a asp-action="Create" class="btn btn-primary">Add New Brand</a>
 }
