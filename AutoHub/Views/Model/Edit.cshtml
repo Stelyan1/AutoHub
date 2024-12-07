@@ -1,0 +1,54 @@
+﻿@using AutoHub.Web.ViewModels.Models
+@model ModelViewModel
+
+<h2>Edit Model</h2>
+
+<form asp-action="Edit" method="post">
+    <div>
+        <label for="Model Name">Model Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Year">Year</label>
+        <input asp-for="Year" class="form-control" />
+        <span asp-validation-for="Year" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="HorsePower">HorsePower</label>
+        <input asp-for="HorsePower" class="form-control" />
+        <span asp-validation-for="HorsePower" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="FuelType">FuelType</label>
+        <input asp-for="FuelType" class="form-control" />
+        <span asp-validation-for="FuelType" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="GasConsumption">GasConsumption</label>
+        <input asp-for="GasConsumption" class="form-control" />
+        <span asp-validation-for="GasConsumption" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Description">Description</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="ImageUrl">ImageUrl</label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="SelectedBrand"></label>
+        @Html.DropDownListFor(model => model.SelectedBrand,
+                 new SelectList(Model.Brands, "Id", "Name", Model.SelectedBrand),
+                 "Select a brand", new { @class = "form-control" })
+
+        <span asp-validation-for="SelectedBrand"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Save Changes</button>
+</form>
+
+<a asp-action="Index">Back to Models</a>

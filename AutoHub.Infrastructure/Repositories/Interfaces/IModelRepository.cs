@@ -10,5 +10,6 @@ namespace AutoHub.Infrastructure.Repositories.Interfaces
     public interface IModelRepository : IBaseRepository<Model>
     {
         Task<Model?> GetIdAndVerifyAsync(Guid id);
+        Task UpdateModelAsync(Model model);
     }
 }

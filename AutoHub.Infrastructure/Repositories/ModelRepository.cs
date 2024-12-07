@@ -22,5 +22,10 @@ namespace AutoHub.Infrastructure.Repositories
                 .Include(m => m.Brand)
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
+
+        public async Task UpdateModelAsync(Model model)
+        {
+            _dbContext.Models.Update(model);
+        }
     }
 }

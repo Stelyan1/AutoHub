@@ -18,7 +18,7 @@ namespace AutoHub.Data.Configuration
             builder.HasKey(gb => gb.Id);
 
             builder.HasOne(gb => gb.Model)
-                   .WithMany(gb => gb.Gearboxes)
+                   .WithMany(m => m.Gearboxes)
                    .HasForeignKey(gb => gb.Application);
 
             builder.Property(gb => gb.Id)

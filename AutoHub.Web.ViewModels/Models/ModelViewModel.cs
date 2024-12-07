@@ -13,6 +13,9 @@ namespace AutoHub.Web.ViewModels.Models
     using static AutoHub.Common.ModelViewErrorMessages.Model;
     public class ModelViewModel
     {
+        [Required]
+        public Guid Id { get; set; }
+
         [Required(ErrorMessage = ModelNameIsRequired)]
         [MinLength(ModelNameMinLength)]
         [MaxLength(ModelNameMaxLength)]

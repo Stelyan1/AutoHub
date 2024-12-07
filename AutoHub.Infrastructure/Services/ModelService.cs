@@ -1,5 +1,6 @@
 ﻿using AutoHub.Data.Models;
 using AutoHub.Infrastructure.DTOs;
+using AutoHub.Infrastructure.Repositories;
 using AutoHub.Infrastructure.Repositories.Interfaces;
 using AutoHub.Infrastructure.Services.Interfaces;
 using Microsoft.VisualBasic;
@@ -16,11 +17,15 @@ namespace AutoHub.Infrastructure.Services
     {
         private readonly IModelRepository _modelRepository;
         private readonly IBrandRepository _brandRepository;
+        private readonly IEngineRepository _engineRepository;
+        private readonly IGearboxRepository _gearboxRepository;
 
-        public ModelService(IModelRepository modelRepository, IBrandRepository brandRepository)
+        public ModelService(IModelRepository modelRepository, IBrandRepository brandRepository, IEngineRepository engineRepository, IGearboxRepository gearboxRepository)
         {
             _modelRepository = modelRepository;
             _brandRepository = brandRepository;
+            _engineRepository = engineRepository;
+            _gearboxRepository = gearboxRepository;
         }
 
         public async Task AddModelAsync(ModelDto modelDto)
@@ -40,6 +45,21 @@ namespace AutoHub.Infrastructure.Services
 
             await _modelRepository.AddAsync(model);
             await _modelRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteModelAsync(Guid id)
+        {
+            var model = await _modelRepository.GetIdAndVerifyAsync(id);
+
+            if (model != null)
+            {
+                _modelRepository.Delete(model);
+                await _modelRepository.SaveChangesAsync();
+            }
+            else
+            {
+                throw new ArgumentException("Model not found");
+            }
         }
 
         public async Task<IEnumerable<ModelDto>> GetAllModelsAsync()
@@ -84,6 +104,48 @@ namespace AutoHub.Infrastructure.Services
                 BrandId = model.BrandId,
                 BrandName = brand?.Name
             };
+        }
+
+        public async Task DeleteEngineAsync(Engine engine)
+        {
+            _engineRepository.Delete(engine);
+        }
+
+        public async Task DeleteGearboxAsync(Gearbox gearbox)
+        {
+            _gearboxRepository.Delete(gearbox);
+        }
+
+        public async Task<IEnumerable<Engine>> GetEnginesByModelIdAsync(Guid modelId)
+        {
+            return await _engineRepository.GetByModelIdAsync(modelId);
+        }
+
+        public async Task<IEnumerable<Gearbox>> GetGearboxesByModelIdAsync(Guid modelId)
+        {
+            return await _gearboxRepository.GetByModelIdAsync(modelId);
+        }
+
+        public async Task UpdateModelAsync(ModelDto modelDto)
+        {
+            var model = await _modelRepository.GetByIdAsync(modelDto.Id);
+
+            if (model == null)
+            {
+                throw new ArgumentException("Model not found");
+            }
+
+            model.Name = modelDto.Name;
+            model.Year = modelDto.Year;
+            model.HorsePower = modelDto.HorsePower;
+            model.FuelType = modelDto.FuelType;
+            model.GasConsumption = modelDto.GasConsumption;
+            model.Description = modelDto.Description;
+            model.ImageUrl = modelDto.ImageUrl;
+            model.BrandId = modelDto.BrandId;
+
+            await _modelRepository.UpdateModelAsync(model);
+            await _modelRepository.SaveChangesAsync();
         }
     }
 }

@@ -25,5 +25,12 @@ namespace AutoHub.Infrastructure.Repositories
                 .FirstOrDefaultAsync(g => g.Id == id);
           // #pragma warning restore CS8603 // Possible null reference return.
         }
+
+        public async Task<IEnumerable<Gearbox>> GetByModelIdAsync(Guid modelId)
+        {
+            return await _dbContext.Gearboxes
+                           .Where(g => g.Application == modelId)
+                           .ToListAsync();
+        }
     }
 }

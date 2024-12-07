@@ -22,6 +22,7 @@ namespace AutoHub.Data.Configuration
                    .WithMany(b => b.Models)
                    .HasForeignKey(m => m.BrandId)
                    .OnDelete(DeleteBehavior.Cascade);
+                   
 
             //Initialize
             builder.Property(m => m.Id)

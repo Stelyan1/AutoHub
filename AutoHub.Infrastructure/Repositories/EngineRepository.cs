@@ -17,6 +17,15 @@ namespace AutoHub.Infrastructure.Repositories
 
         }
 
+       
+
+        public async Task<IEnumerable<Engine>> GetByModelIdAsync(Guid modelId)
+        {
+            return await _dbContext.Engines
+                           .Where(e => e.ModelId == modelId)
+                           .ToListAsync();
+        }
+
         public async Task<Engine?> GetIdAndVerifyAsync(Guid id)
         {
             return await _dbSet

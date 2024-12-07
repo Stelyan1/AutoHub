@@ -91,7 +91,7 @@ namespace AutoHub.Infrastructure.Services
 
             if (brand == null)
             {
-                throw new ArgumentException("Product not found");
+                throw new ArgumentException("Brand not found");
             }
 
             brand.Name = brandDto.Name;
