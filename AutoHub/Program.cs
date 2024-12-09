@@ -94,12 +94,14 @@ namespace AutoHub
             }
 
             // Configure the HTTP request pipeline.
+            // Configure Error pages and handling.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                
                 app.UseHsts();
             }
+           
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -113,19 +115,25 @@ namespace AutoHub
 
             app.UseAuthorization();
 
-            // Enable Identity's Razor Pages for login, register 
-            app.MapRazorPages();
+            app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
 
-            app.MapControllerRoute(
+			app.MapControllerRoute(
                 name: "areas",
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
 
             app.MapControllerRoute(
+                name: "Errors",
+                pattern: "{controller=Home}/{action=Index}/{statusCode?}");
+
+            app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            app.Run();
+			// Enable Identity's Razor Pages for login, register 
+			app.MapRazorPages();
+
+			app.Run();
         }
     }
 }
