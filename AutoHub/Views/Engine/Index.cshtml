@@ -1,6 +1,31 @@
 ﻿@using AutoHub.Infrastructure.DTOs
 @model IEnumerable<AutoHub.Infrastructure.DTOs.EngineDto>
 
+<style>
+
+    .btn {
+        display: inline-block;
+        padding: 5px 15px;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 4px;
+        min-width: 100px;
+    }
+
+    .custom-red {
+        background-color: #c90404;
+        color: white;
+        border: none;
+    }
+
+    .custom-black {
+        background-color: #000000;
+        color: white;
+        border: none;
+    }
+</style>
+
+
 <h2 class="text-center">All Engines</h2>
 
 <div class="container">
@@ -12,7 +37,12 @@
                     <img src="@engines.ImageUrl" alt="@engines.Name" class="card-img-top" style="max-height: 200px; object-fit: cover;" />
                     <div class="card-body">
                         <h5 class="card-title">@engines.Name</h5>
-                        <a href="@Url.Action("Details", "Engine", new { id = engines.Id })" class="btn btn-primary">Details</a>
+                        <a asp-action="Details" asp-route-id="@engines.Id" class="btn btn-primary">Details</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Delete" asp-route-id="@engines.Id" class="btn custom-red">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@engines.Id" class="btn custom-black">Edit</a>
+                        }
                     </div>
                 </div>
             </div>

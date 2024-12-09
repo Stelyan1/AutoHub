@@ -1,0 +1,26 @@
+﻿@using AutoHub.Infrastructure.DTOs
+@model EngineDto
+
+
+
+<h2>Delete Engine</h2>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center">@Model.Name</h3>
+                <p class="text-danger mt-3">Are you sure you want to delete @(Model.Name)?</p>
+                <p class="text-danger mt-3">This model is related to the @(Model.BrandName)</p>
+            </div>
+            <div class="card-footer">
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="Name" />
+                    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                    <a asp-controller="Engine" asp-action="Index" asp-route-id="@Model.Id" class="btn btn-primary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

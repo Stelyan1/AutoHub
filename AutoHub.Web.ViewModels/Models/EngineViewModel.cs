@@ -13,6 +13,9 @@ namespace AutoHub.Web.ViewModels.Models
     using static AutoHub.Common.EngineModelErrorMessages;
     public class EngineViewModel
     {
+        [Required]
+        public Guid Id { get; set; }
+
         [Required(ErrorMessage = EngineNameMsg)]
         [MinLength(EngineNameMinLength)]
         [MaxLength(EngineNameMaxLength)]

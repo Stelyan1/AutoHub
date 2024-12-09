@@ -12,5 +12,7 @@ namespace AutoHub.Infrastructure.Services.Interfaces
         Task<IEnumerable<EngineDto>> GetAllEnginesAsync();
         Task<EngineDto?> GetEngineByIdAsync(Guid id);
         Task AddEngineAsync(EngineDto engineDto);
+        Task DeleteEngineAsync(Guid id);
+        Task UpdateEngineAsync(EngineDto EngineDto);
     }
 }

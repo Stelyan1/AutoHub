@@ -43,6 +43,21 @@ namespace AutoHub.Infrastructure.Services
             await _engineRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteEngineAsync(Guid id)
+        {
+            var engine = await _engineRepository.GetIdAndVerifyAsync(id);
+
+            if (engine != null) 
+            {
+                _engineRepository.Delete(engine);
+                await _engineRepository.SaveChangesAsync();
+            }
+            else
+            {
+                throw new ArgumentException("Engine not found");
+            }
+        }
+
         public async Task<IEnumerable<EngineDto>> GetAllEnginesAsync()
         {
             var engines = await _engineRepository.GetAllAsync();
@@ -91,6 +106,31 @@ namespace AutoHub.Infrastructure.Services
                 ImageUrl = engine.ImageUrl,
                 YearsProduction = engine.YearsProduction
             };
+        }
+
+        public async Task UpdateEngineAsync(EngineDto engineDto)
+        {
+            var engine = await _engineRepository.GetByIdAsync(engineDto.Id);
+
+            if (engine == null) 
+            {
+                throw new ArgumentException("Engine not found");
+            }
+
+            engine.Id = engineDto.Id;
+            engine.Name = engineDto.Name;
+            engine.BrandId = engineDto.BrandId;
+            engine.ModelId = engineDto.ModelId;
+            engine.Cylinders = engineDto.Cylinders;
+            engine.ValvetrainDriveSystem = engineDto.ValveTrainDriveSystem;
+            engine.PowerOutput = engineDto.PowerOutput;
+            engine.Torque = engineDto.Torque;
+            engine.Rpm = engineDto.Rpm;
+            engine.ImageUrl = engineDto.ImageUrl;
+            engine.YearsProduction = engineDto.YearsProduction;
+
+            _engineRepository.Update(engine);
+            await _engineRepository.SaveChangesAsync();
         }
     }
 }
