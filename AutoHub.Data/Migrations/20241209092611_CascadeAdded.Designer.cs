@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoHub.Data.Migrations
 {
     [DbContext(typeof(AutoHubDbContext))]
-    [Migration("20241207150309_AddedCascade")]
-    partial class AddedCascade
+    [Migration("20241209092611_CascadeAdded")]
+    partial class CascadeAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,7 +64,7 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f5d5808b-ba9d-4b12-a51d-2ffaf41aef1a"),
+                            Id = new Guid("13dcf9bf-f6ee-4da2-a734-30efd1c83ecc"),
                             Description = "Automobili Lamborghini is an Italian manufacturer of luxury sports cars and SUVs based in Sant'Agata Bolognese. The company is owned by the Volkswagen Group through its subsidiary Audi.",
                             FoundedBy = "Ferruccio Lamborghini",
                             FoundedDate = new DateTime(1963, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -73,7 +73,7 @@ namespace AutoHub.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("48e20c6a-afe4-4a84-a494-eda36861cf87"),
+                            Id = new Guid("9aaa1db2-5e63-434f-898f-9ee91b0fd978"),
                             Description = "BMW is a German company with activities covering the production and sale of motor vehicles, spare parts and accessories for motor vehicles, engineering products, as well as related services.",
                             FoundedBy = "Karl Rapp , Gustav Otto , Camillo Castiglioni , Franz Josef Pop",
                             FoundedDate = new DateTime(1916, 3, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -82,7 +82,7 @@ namespace AutoHub.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c8444b83-9e61-4ef0-ba0f-6eebaa6587f8"),
+                            Id = new Guid("d8f02672-ea8f-4cbf-88a7-9c9e43777681"),
                             Description = "Mercedes-Benz is a trademark and a company of the same name - a manufacturer of premium cars, trucks, buses and other vehicles, which is part of the German concern \"Mercedes-Benz Group\". It is one of the most recognizable car brands in the world.",
                             FoundedBy = "Karl Benz, Gottlieb Daimler, Wilhelm Maybach and Emil Jellinek",
                             FoundedDate = new DateTime(1926, 6, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -111,32 +111,32 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f01c293e-8a02-459e-bd90-9c9d7cc72fda"),
+                            Id = new Guid("6f7f81a9-a4cb-4d01-a000-4b516d4fc3a8"),
                             Name = "Motor Oil"
                         },
                         new
                         {
-                            Id = new Guid("1fb8d4d2-bfe2-4829-a979-b1734a16a12d"),
+                            Id = new Guid("26ebe960-2d8c-486f-8dde-912946bb1981"),
                             Name = "Filters"
                         },
                         new
                         {
-                            Id = new Guid("9ea49f09-1b99-40df-9111-c26c4b75375e"),
+                            Id = new Guid("f13d9b3f-0e0d-4307-9eb4-fe2f2f7ac35f"),
                             Name = "Steering System"
                         },
                         new
                         {
-                            Id = new Guid("0399a682-9132-4eea-87d8-b6fd871b5cb7"),
+                            Id = new Guid("cc72aecd-7d36-4123-9d1e-10535c7091df"),
                             Name = "Braking System"
                         },
                         new
                         {
-                            Id = new Guid("a5f27ad4-0853-4964-9a92-3cd0a484c67e"),
+                            Id = new Guid("89f32ac1-c092-42cc-af5d-bccae0fc7e11"),
                             Name = "Engine Parts"
                         },
                         new
                         {
-                            Id = new Guid("0b18aac8-77ba-481e-afef-dfde25ba2670"),
+                            Id = new Guid("67db8a84-6942-4484-83e1-74dbb28e8a45"),
                             Name = "Cooling System"
                         });
                 });
@@ -212,7 +212,7 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a60c39b6-f643-4172-9cd1-9f204ce77710"),
+                            Id = new Guid("1ab9f9b6-2cc3-415b-8718-6776815bcbf9"),
                             BrandId = new Guid("148c36a7-5930-4ce3-8bb0-658fd772c423"),
                             Cylinders = 6,
                             ImageUrl = "https://fsc.codes/cdn/shop/articles/BMW-B58.jpg?v=1703197166",
@@ -285,7 +285,7 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("857acc2b-b773-47e5-a876-99ffc5ef75ea"),
+                            Id = new Guid("611d4e13-9568-4c10-9178-656131e3a2d4"),
                             Application = new Guid("79a4d785-273d-488d-b7fe-f9ab58c405bf"),
                             Description = "The ZF 8HP transmission is ZF Friedrichshafen AG's trademark name for its 8-speed automatic transmission models for longitudinal engine applications. The name is short for 8-speed transmission with hydraulic converter and planetary gearsets. Designed and first built by ZF's subsidiary in Saarbrücken, Germany, it debuted in 2008 on the BMW 7 Series (F01) 760Li sedan fitted with the V12 engine. BMW remains a major customer for the transmission.",
                             ImageUrl = "https://hips.hearstapps.com/hmg-prod/images/zf-8-speed-trans-1538511984.jpg",
@@ -351,7 +351,7 @@ namespace AutoHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2c167f42-63c4-4920-b74e-43613df316ce"),
+                            Id = new Guid("b17cd3a8-95b3-4c46-8b99-d143a0ddbe20"),
                             BrandId = new Guid("148c36a7-5930-4ce3-8bb0-658fd772c423"),
                             Description = "The BMW 340i Sedan offers a powerful engine, refined handling, and luxury features.",
                             FuelType = "Petrol",
@@ -363,7 +363,7 @@ namespace AutoHub.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b358132c-24a2-44f6-a163-1e8cd77a2e85"),
+                            Id = new Guid("dca9518d-8f81-41d0-a8ba-472536d04514"),
                             BrandId = new Guid("c6d8e95b-d57f-4b15-bc7d-2f1ad38a17a9"),
                             Description = "The output of the AMG 6.3-litre V8 engine is unchanged at 336 kW (457 hp) and can be increased to a maximum of 358 kW (487 hp) with the optional AMG Performance package. Agility, grip and ride comfort have been enhanced as a result of numerous measures to optimise the AMG sports suspension.",
                             FuelType = "Petrol",
@@ -375,7 +375,7 @@ namespace AutoHub.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("939861c1-c5c5-48d8-9b87-7867d617ecd9"),
+                            Id = new Guid("dd1703e4-2e45-48e3-a48e-a73521725206"),
                             BrandId = new Guid("60caba99-72aa-421a-a569-7cb41423a3ee"),
                             Description = "Lamborghini created the Aventador SVJ to embrace challenges head-on, combining cutting-edge technology with extraordinary design, while always refusing to compromise. In a future driven by technology, it’s easy to lose the genuine thrill of driving. But in the future shaped by Lamborghini, this won’t be left behind, because there will always be a driver behind the wheel. ",
                             FuelType = "Petrol",

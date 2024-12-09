@@ -1,11 +1,11 @@
 ﻿@using AutoHub.Web.ViewModels.Models
 @model GearboxViewModel
 
-<h2>Add a New Gearbox</h2>
+<h2>Edit Gearbox</h2>
 
-<form asp-action="Create" method="post">
+<form asp-action="Edit" method="post">
     <div>
-        <label for="Name">Gearbox Name</label>
+        <label for="Gearbox Name">Gearbox Name</label>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
@@ -18,13 +18,12 @@
         <label asp-for="Application"></label>
         @Html.DropDownListFor(model => model.Application,
                  new SelectList(Model.Models, "Id", "Name", Model.Application),
-                 "Select a model", new { @class = "form-control" })
+                 "Select application", new { @class = "form-control" })
 
         <span asp-validation-for="Application"></span>
     </div>
     <div>
         <label asp-for="TransmissionType">Transmission Type</label>
-        <small class="text-muted">Choose between Automatic or Manual</small>
         <select asp-for="TransmissionType" class="form-control">
             <option value="">-- Select Transmission --</option>
             <option value="Manual">Manual</option>
@@ -34,13 +33,11 @@
     </div>
     <div>
         <label for="Speeds">Speeds</label>
-        <small class="text-muted">Type in range 4 to 10</small>
         <input asp-for="Speeds" class="form-control" />
         <span asp-validation-for="Speeds" class="text-danger"></span>
     </div>
     <div>
         <label for="YearsProduced">Years Produced</label>
-        <small class="text-muted">Format: 2005-2016</small>
         <input asp-for="YearsProduced" class="form-control" />
         <span asp-validation-for="YearsProduced" class="text-danger"></span>
     </div>
@@ -55,7 +52,7 @@
         <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-2">Create Gearbox</button>
+    <button type="submit" class="btn btn-primary mt-2">Save Changes</button>
 </form>
 
-<a asp-action="Index">Back to Gearbox List</a>
+<a asp-action="Index">Back to Gearboxes</a>

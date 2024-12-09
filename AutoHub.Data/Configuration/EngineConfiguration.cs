@@ -20,13 +20,13 @@ namespace AutoHub.Data.Configuration
             builder.HasOne(e => e.Brand)
                    .WithMany(b => b.Engines)
                    .HasForeignKey(e => e.BrandId);
-                
-                   
+
+
 
             builder.HasOne(e => e.Model)
                    .WithMany(m => m.Engines)
-                   .HasForeignKey(e => e.ModelId)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .HasForeignKey(e => e.ModelId);
+                   
                    
 
             builder.Property(e => e.Id)

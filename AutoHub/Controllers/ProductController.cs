@@ -38,6 +38,11 @@ namespace AutoHub.Controllers
         [Authorize]
         public async Task<IActionResult> Create() 
         {
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
             var categories = await _categoryRepository.GetAllAsync();
 
             var productViewModel = new ProductViewModel
@@ -137,6 +142,11 @@ namespace AutoHub.Controllers
         [Authorize]
         public async Task<IActionResult> Cart() 
         {
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
             var cartProducts = await _productService.GetCartProductsAsync(GetSellerId());
             return View(cartProducts);
         }

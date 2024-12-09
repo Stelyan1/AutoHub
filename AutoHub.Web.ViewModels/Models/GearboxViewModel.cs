@@ -12,6 +12,9 @@ namespace AutoHub.Web.ViewModels.Models
     using static AutoHub.Common.EntityValidationConstants.Gearbox;
    public class GearboxViewModel
    {
+        [Required]
+        public Guid Id { get; set; }
+
         [Required(ErrorMessage = GearboxName)]
         [MinLength(GearboxNameMinLength)]
         [MaxLength(GearboxNameMaxLength)]
@@ -23,6 +26,7 @@ namespace AutoHub.Web.ViewModels.Models
         public string TransmissionType { get; set; } = null!;
 
         [Required(ErrorMessage = SpeedsMsg)]
+        [Range(4, 8, ErrorMessage = "Speeds should range from 4 to 10")]
         public int Speeds { get; set; }
 
         [Required(ErrorMessage = YearsProducedMsg)]

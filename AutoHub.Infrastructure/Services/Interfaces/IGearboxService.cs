@@ -12,5 +12,8 @@ namespace AutoHub.Infrastructure.Services.Interfaces
         Task<IEnumerable<GearboxDto>> GetAllGearboxesAsync();
         Task<GearboxDto?> GetGearboxesByIdAsync(Guid id);
         Task AddGearboxAsync(GearboxDto gearboxDto);
+        Task GetGearboxById(Guid id);
+        Task UpdateGearboxAsync(GearboxDto gearboxDto);
+        Task DeleteGearboxAsync(Guid id);
     }
 }

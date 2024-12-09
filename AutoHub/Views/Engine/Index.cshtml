@@ -51,7 +51,7 @@
 </div>
 
 
-@if (User.Identity.IsAuthenticated)
+@if (User.IsInRole("Admin"))
 {
   <a asp-action="Create" class="btn btn-primary">Add New Engine</a>
 }

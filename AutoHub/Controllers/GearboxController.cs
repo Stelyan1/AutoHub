@@ -29,7 +29,7 @@ namespace AutoHub.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create() 
         {
             var modelApplication = await _modelRepository.GetAllAsync();
@@ -43,7 +43,7 @@ namespace AutoHub.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(GearboxViewModel model) 
         {
             if (ModelState.IsValid) 
@@ -87,6 +87,110 @@ namespace AutoHub.Controllers
             }
 
             return this.View(gearbox);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            bool isValid = Guid.TryParse(id, out Guid guidId);
+
+            if (!isValid)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var gearbox = await _gearboxService.GetGearboxesByIdAsync(guidId);
+
+            if (gearbox == null) 
+            {
+                throw new ArgumentException("Gearbox not found");
+            }
+
+            var gearboxDto = new GearboxDto
+                {
+                 Id = gearbox.Id,
+                 Name = gearbox.Name,
+                 ApplicationName = gearbox.ApplicationName
+                };
+
+            return View(gearboxDto);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try 
+            {
+                await _gearboxService.DeleteGearboxAsync(id);
+                return RedirectToAction(nameof(Index));
+            } 
+            catch (Exception) 
+            {
+                throw new ArgumentException("Gearbox not found");
+            }
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit (string id)
+        {
+            bool isValid = Guid.TryParse (id, out Guid guidId);
+
+            if (!isValid)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var gearbox = await _gearboxService.GetGearboxesByIdAsync(guidId);
+            var models =  await _modelRepository.GetAllAsync();
+
+            if (gearbox == null) 
+            {
+                throw new ArgumentException("Gearbox not found");
+            }
+
+            var gearboxModel = new GearboxViewModel
+            {
+                Id = gearbox.Id,
+                Name = gearbox.Name,
+                Manufacturer = gearbox.Manufacturer,
+                Application = gearbox.Application,
+                Models = models.ToList(),
+                TransmissionType = gearbox.TransmissionType,
+                Speeds = gearbox.Speeds,
+                YearsProduced = gearbox.YearsProduced,
+                Description = gearbox.Description,
+                ImageUrl = gearbox.ImageUrl
+            };
+
+            return View(gearboxModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit (GearboxViewModel gearboxModel)
+        {
+            if (ModelState.IsValid) 
+            {
+                var gearbox = new GearboxDto
+                {
+                    Id = gearboxModel.Id,
+                    Name = gearboxModel.Name,
+                    Manufacturer = gearboxModel.Manufacturer,
+                    Application = gearboxModel.Application,
+                    TransmissionType = gearboxModel.TransmissionType,
+                    Speeds = gearboxModel.Speeds,
+                    YearsProduced = gearboxModel.YearsProduced,
+                    Description = gearboxModel.Description,
+                    ImageUrl = gearboxModel.ImageUrl
+                };
+
+                await _gearboxService.UpdateGearboxAsync(gearbox);
+                return RedirectToAction("Details", new { id = gearboxModel.Id });
+            }
+            return View(gearboxModel);
         }
     }
 }

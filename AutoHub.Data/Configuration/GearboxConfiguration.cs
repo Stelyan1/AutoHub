@@ -20,6 +20,7 @@ namespace AutoHub.Data.Configuration
             builder.HasOne(gb => gb.Model)
                    .WithMany(m => m.Gearboxes)
                    .HasForeignKey(gb => gb.Application);
+                   
 
             builder.Property(gb => gb.Id)
                    .IsRequired();
