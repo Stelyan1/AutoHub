@@ -1,5 +1,8 @@
-﻿@using AutoHub.Infrastructure.DTOs
-@model IEnumerable<AutoHub.Infrastructure.DTOs.BrandDto>
+﻿@using AutoHub.Infrastructure.Models
+@using AutoHub.Infrastructure.DTOs
+@model SearchPagination
+
+
 
 <style>
 
@@ -26,6 +29,14 @@
 
 <p class="h3">All Brands</p>
 
+<form method="get">
+    <div class="mb-3">
+        <input type="text" name="SearchQuery" value="@Model.SearchQuery" class="form-control" placeholder="Search by brand name..."/>
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+
 <table class="table table-striped">
     <thead>
         <tr>
@@ -37,7 +48,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (BrandDto brand in Model)
+        @foreach (BrandDto brand in Model.Brands)
         {
 
             <tr>
@@ -58,9 +69,36 @@
     </tbody>
 </table>
 
-@if (User.IsInRole("Admin"))
+
+@if(Model.TotalPages > 0 || User.IsInRole("Admin"))
 {
-    <a asp-action="Create" class="btn btn-primary">Add New Brand</a>
+    <div class="d-flex justify-content-between align-items-center mt-4">
+
+        <div>
+            <a asp-action="Index"
+               asp-route-SearchQuery="@Model.SearchQuery"
+               asp-route-CurrentPage="@(Model.CurrentPage > 1 ? Model.CurrentPage - 1 : 1)"
+               class="btn btn-secondary @(Model.CurrentPage == 1 ? "disabled" : "")">
+               Previous
+           </a>
+
+           <a asp-action="Index"
+              asp-route-SearchQuery="@Model.SearchQuery"
+              asp-route-CurrentPage="@(Model.CurrentPage < Model.TotalPages ? Model.CurrentPage + 1 : Model.TotalPages)"
+              class="btn btn-secondary @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+              Next
+          </a>
+        </div>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Create" class="btn btn-primary">Add New Brand</a>
+        }
+
+    </div>
 }
+
+
+
 
 

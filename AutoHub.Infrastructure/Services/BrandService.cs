@@ -2,6 +2,7 @@
 using AutoHub.Infrastructure.DTOs;
 using AutoHub.Infrastructure.Repositories.Interfaces;
 using AutoHub.Infrastructure.Services.Interfaces;
+using AutoHub.Web.ViewModels.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

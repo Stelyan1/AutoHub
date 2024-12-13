@@ -1,5 +1,6 @@
-﻿@using AutoHub.Infrastructure.DTOs
-@model IEnumerable<AutoHub.Infrastructure.DTOs.EngineDto>
+﻿@using AutoHub.Infrastructure.Models
+@using AutoHub.Infrastructure.DTOs
+@model SearchPagination
 
 <style>
 
@@ -28,9 +29,16 @@
 
 <h2 class="text-center">All Engines</h2>
 
+<form method="get">
+    <div class="mb-3">
+        <input type="text" name="SearchQuery" value="@Model.SearchQuery" class="form-control" placeholder="Search by engine name..." />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
 <div class="container">
     <div class="row">
-        @foreach (EngineDto engines in Model)
+        @foreach (EngineDto engines in Model.Engines)
         {
             <div class="col-md-4 mb-4">
                 <div class="card text-center">
@@ -50,11 +58,35 @@
     </div>
 </div>
 
-
-@if (User.IsInRole("Admin"))
+@if (Model.TotalPages > 0 || User.IsInRole("Admin"))
 {
-  <a asp-action="Create" class="btn btn-primary">Add New Engine</a>
+    <div class="d-flex justify-content-between align-items-center mt-4">
+
+        <div>
+            <a asp-action="Index"
+               asp-route-SearchQuery="@Model.SearchQuery"
+               asp-route-CurrentPage="@(Model.CurrentPage > 1 ? Model.CurrentPage - 1 : 1)"
+               class="btn btn-secondary @(Model.CurrentPage == 1 ? "disabled" : "")">
+                Previous
+            </a>
+
+            <a asp-action="Index"
+               asp-route-SearchQuery="@Model.SearchQuery"
+               asp-route-CurrentPage="@(Model.CurrentPage < Model.TotalPages ? Model.CurrentPage + 1 : Model.TotalPages)"
+               class="btn btn-secondary @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                Next
+            </a>
+        </div>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Create" class="btn btn-primary">Add New Engine</a>
+        }
+
+    </div>
 }
+
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

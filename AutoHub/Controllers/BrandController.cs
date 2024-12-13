@@ -1,6 +1,8 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
+using AutoHub.Infrastructure;
 using AutoHub.Infrastructure.DTOs;
+using AutoHub.Infrastructure.Models;
 using AutoHub.Infrastructure.Repositories.Interfaces;
 using AutoHub.Infrastructure.Services.Interfaces;
 using AutoHub.Web.ViewModels.Models;
@@ -20,11 +22,40 @@ namespace AutoHub.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? searchQuery, int currentPage = 1)
         {
             var brands = await _brandService.GetAllBrandsAsync();
 
-            return View(brands);
+            //Search filter
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                brands = brands.Where(b => b.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));                             
+            }
+
+
+            //Pagination
+            int entitiesPerPage = 3;
+            int totalBrands = brands.Count();
+            var pagedBrands = brands.Skip((currentPage - 1) * entitiesPerPage)
+                                    .Take(entitiesPerPage);
+
+            var viewModel = new SearchPagination
+            {
+                Brands = pagedBrands.Select(b => new BrandDto
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    FoundedBy = b.FoundedBy,
+                    FoundedDate = b.FoundedDate,
+                    Description = b.Description,
+                    ImageUrl = b.ImageUrl
+                }),
+                SearchQuery = searchQuery,
+                CurrentPage = currentPage,
+                EntitiesPerPage = entitiesPerPage,
+                TotalPages = (int)Math.Ceiling((double)totalBrands / entitiesPerPage),
+            };
+            return View(viewModel);
         }
 
         [HttpGet]

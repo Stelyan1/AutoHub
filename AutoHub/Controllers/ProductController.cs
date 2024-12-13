@@ -1,6 +1,7 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
 using AutoHub.Infrastructure.DTOs;
+using AutoHub.Infrastructure.Models;
 using AutoHub.Infrastructure.Repositories.Interfaces;
 using AutoHub.Infrastructure.Services.Interfaces;
 using AutoHub.Web.ViewModels.Models;
@@ -27,10 +28,42 @@ namespace AutoHub.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Index() 
+        public async Task<IActionResult> Index(string? searchQuery, int currentPage = 1) 
         {
             var products = await _productService.GetAllProductsAsync(GetSellerId());
-            return View(products);
+            var categories = await _categoryRepository.GetAllAsync();
+           
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                products = products.Where(p => p.ProductName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
+            }
+
+            int entitiesPerPage = 3;
+            int totalBrands = products.Count();
+            var pagedBrands = products.Skip((currentPage - 1) * entitiesPerPage)
+                                    .Take(entitiesPerPage);
+
+            var viewModel = new SearchPagination
+            {
+                Products = pagedBrands.Select(p => new ProductDto
+                {
+                    Id = p.Id,
+                    Manufacturer = p.Manufacturer,
+                    ProductName = p.ProductName,
+                    CategoryId = p.CategoryId,
+                    CategoryName = p.CategoryName,
+                    Price = p.Price,
+                    Description = p.Description,
+                    ImageUrl = p.ImageUrl,
+                    IsSeller = p.IsSeller,
+                    HasBought = p.HasBought
+                }),
+                SearchQuery = searchQuery,
+                CurrentPage = currentPage,
+                EntitiesPerPage = entitiesPerPage,
+                TotalPages = (int)Math.Ceiling((double)totalBrands / entitiesPerPage),
+            };
+            return View(viewModel);
            
         }
 

@@ -10,6 +10,7 @@ namespace AutoHub
     using AutoHub.Infrastructure.Repositories.Interfaces;
     using AutoHub.Infrastructure.Services;
     using AutoHub.Infrastructure.Services.Interfaces;
+    using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
@@ -58,6 +59,11 @@ namespace AutoHub
             .AddRoles <IdentityRole>()
             .AddEntityFrameworkStores<AutoHubDbContext>();
 
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Home/Error403";
+            });
+
             //Registering repos in DI
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             builder.Services.AddScoped<IModelRepository, ModelRepository>();
@@ -98,27 +104,23 @@ namespace AutoHub
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                
                 app.UseHsts();
             }
-           
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            app.UseRouting();
-
-            // Add Authorization and Authentication middleware
-            app.UseAuthentication();
-
-            //TODO add Middleware for pages redirect based on the role of the user
-
-            app.UseAuthorization();
 
             app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
 
-			app.MapControllerRoute(
-                name: "areas",
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseRouting();
+
+            
+            app.UseAuthentication();
+            
+            app.UseAuthorization();
+
+            app.MapControllerRoute(
+                name: "Areas",
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
 

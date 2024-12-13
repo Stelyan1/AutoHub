@@ -5,6 +5,9 @@
 
 <form asp-action="Edit" method="post">
     <div>
+        <input type="hidden" asp-for="Id" />
+    </div>
+    <div>
         <label for="Engine Name">Engine Name</label>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>

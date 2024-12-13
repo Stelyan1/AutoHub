@@ -1,6 +1,7 @@
 ﻿using AutoHub.Data;
 using AutoHub.Data.Models;
 using AutoHub.Infrastructure.DTOs;
+using AutoHub.Infrastructure.Models;
 using AutoHub.Infrastructure.Repositories.Interfaces;
 using AutoHub.Infrastructure.Services.Interfaces;
 using AutoHub.Web.ViewModels.Models;
@@ -22,10 +23,43 @@ namespace AutoHub.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? searchQuery, int currentPage = 1)
         {
             var gearboxes = await _gearboxService.GetAllGearboxesAsync();
-            return View(gearboxes);
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                gearboxes = gearboxes.Where(g => g.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
+            }
+
+            int entitiesPerPage = 3;
+            int totalBrands = gearboxes.Count();
+            var pagedBrands = gearboxes.Skip((currentPage - 1) * entitiesPerPage)
+                                    .Take(entitiesPerPage);
+
+
+            var viewModel = new SearchPagination
+            {
+                GearBoxes = pagedBrands.Select(g => new GearboxDto
+                {
+                    Id = g.Id,
+                    Manufacturer = g.Manufacturer,
+                    Name = g.Name,
+                    Application = g.Application,
+                    ApplicationName = g.ApplicationName,
+                    TransmissionType = g.TransmissionType,
+                    Speeds = g.Speeds,
+                    YearsProduced = g.YearsProduced,
+                    Description = g.Description,
+                    ImageUrl = g.ImageUrl
+                }),
+                SearchQuery = searchQuery,
+                CurrentPage = currentPage,
+                EntitiesPerPage = entitiesPerPage,
+                TotalPages = (int)Math.Ceiling((double)totalBrands / entitiesPerPage),
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]
