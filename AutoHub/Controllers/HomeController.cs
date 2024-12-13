@@ -43,7 +43,7 @@ namespace AutoHub.Controllers
                 return this.View("Error403");
             }
 
-            return View();
+            return View("Error500");
         }
     }
 }

@@ -99,16 +99,16 @@ namespace AutoHub
                 }
             }
 
-            // Configure the HTTP request pipeline.
-            // Configure Error pages and handling.
+            //// Configure the HTTP request pipeline.
+            //// Configure Error pages and handling.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
 
+            app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
 
-            app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -126,7 +126,7 @@ namespace AutoHub
 
             app.MapControllerRoute(
                 name: "Errors",
-                pattern: "{controller=Home}/{action=Index}/{statusCode?}");
+                pattern: "{controller=Home}/{action=Error}/{statusCode?}");
 
             app.MapControllerRoute(
                 name: "default",
