@@ -1,0 +1,27 @@
+﻿@using AutoHub.Infrastructure.DTOs
+@model HydraulicSystemDto
+
+<div class="container mt-4">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card border-0">
+                <img src="@Model.ImageUrl" alt="@Model.partName" class="img-fluid" style="max-width: 100%; height: min-content;">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-8">
+            <div class="card p-5">
+                <h2 class="text-center">@Model.partName</h2>
+
+                <p><strong>Name:</strong> @Model.partName</p>
+                <p><strong>Description:</strong> @Model.Description</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-primary">Back to All HydraulicSystem parts</a>

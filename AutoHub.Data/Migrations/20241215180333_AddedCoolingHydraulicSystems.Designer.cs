@@ -4,6 +4,7 @@ using AutoHub.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoHub.Data.Migrations
 {
     [DbContext(typeof(AutoHubDbContext))]
-    partial class AutoHubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241215180333_AddedCoolingHydraulicSystems")]
+    partial class AddedCoolingHydraulicSystems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,6 +139,35 @@ namespace AutoHub.Data.Migrations
                             Id = new Guid("9173c2c9-8e3b-4641-8cd6-f9dd5a3a500f"),
                             Name = "Cooling System"
                         });
+                });
+
+            modelBuilder.Entity("AutoHub.Data.Models.CoolingSystem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("Identifier of part");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)")
+                        .HasComment("Description about the part");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Image of the part");
+
+                    b.Property<string>("partName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("Name of the part");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CoolingSystemParts");
                 });
 
             modelBuilder.Entity("AutoHub.Data.Models.Engine", b =>

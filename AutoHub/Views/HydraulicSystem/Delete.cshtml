@@ -1,0 +1,25 @@
+﻿@using AutoHub.Infrastructure.DTOs
+@model HydraulicSystemDto
+
+
+
+<h2>Delete HydraulicSystem part</h2>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center">@Model.partName</h3>
+                <p class="text-danger mt-3">Are you sure you want to delete @(Model.partName)?</p>
+            </div>
+            <div class="card-footer">
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="partName" />
+                    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                    <a asp-controller="HydraulicSystem" asp-action="Index" asp-route-id="@Model.Id" class="btn btn-primary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

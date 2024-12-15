@@ -1,4 +1,5 @@
 ﻿using AutoHub.Infrastructure.DTOs;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,5 +23,6 @@ namespace AutoHub.Infrastructure.Models
         public IEnumerable<EngineDto> Engines { get; set; } = new List<EngineDto>();
         public IEnumerable<GearboxDto> GearBoxes { get; set; } = new List<GearboxDto>();
         public IEnumerable<ProductDto> Products { get; set; } = new List<ProductDto>();
+        public IEnumerable<HydraulicSystemDto> hydraulicSystems { get; set; } = new List<HydraulicSystemDto>();
     }
 }

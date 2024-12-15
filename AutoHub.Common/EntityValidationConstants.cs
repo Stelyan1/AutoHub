@@ -85,5 +85,23 @@
             public const byte DescriptionMinLength = 5;
             public const byte DescriptionMaxLength = 250;
         }
+
+        public static class HydaraulicSystem 
+        {
+            public const byte PartNameMinLength = 3;
+            public const byte PartNameMaxLength = 100;
+
+            public const byte DescriptionMinLength = 10;
+            public const int DescriptionMaxLength = 800;
+        }
+
+        public static class CoolingSystem
+        {
+            public const byte PartNameMinLength = 3;
+            public const byte PartNameMaxLength = 100;
+
+            public const byte DescriptionMinLength = 10;
+            public const int DescriptionMaxLength = 800;
+        }
     }
 }

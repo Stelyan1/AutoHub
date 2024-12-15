@@ -32,6 +32,7 @@ namespace AutoHub.Data
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<ProductClient> ProductClients { get; set; } = null!;
+        public virtual DbSet<HydraulicSystem> HydraulicSystemParts { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

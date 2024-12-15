@@ -72,6 +72,7 @@ namespace AutoHub
             builder.Services.AddScoped<IBrandRepository, BrandRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IHydraulicSystemRepository, HydraulicSystemRepository>();
 
             //Registering services in DI
             builder.Services.AddScoped<IBrandService, BrandService>();
@@ -79,6 +80,7 @@ namespace AutoHub
             builder.Services.AddScoped<IEngineService, EngineService>();
             builder.Services.AddScoped<IGearboxService, GearboxService>();
             builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IHydraulicSystemService, HydraulicSystemService>();
 
             var app = builder.Build();
 
@@ -127,6 +129,10 @@ namespace AutoHub
             app.MapControllerRoute(
                 name: "Errors",
                 pattern: "{controller=Home}/{action=Error}/{statusCode?}");
+
+            app.MapControllerRoute(
+                name: "Admin",
+                pattern: "{controller=Admin}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
                 name: "default",

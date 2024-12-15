@@ -1,0 +1,95 @@
+﻿@using AutoHub.Infrastructure.Models
+@using AutoHub.Infrastructure.DTOs
+@model SearchPagination
+
+<style>
+
+    .btn {
+        display: inline-block;
+        padding: 5px 15px;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 4px;
+        min-width: 100px;
+    }
+
+    .custom-red {
+        background-color: #c90404;
+        color: white;
+        border: none;
+    }
+
+    .custom-black {
+        background-color: #000000;
+        color: white;
+        border: none;
+    }
+</style>
+
+
+<h2 class="text-center">All HydraulicSystem Parts</h2>
+<p>If you need a part head over to our Community Marketplace</p>
+
+<form method="get">
+    <div class="mb-3">
+        <input type="text" name="SearchQuery" value="@Model.SearchQuery" class="form-control" placeholder="Search by part name..." />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<div class="container">
+    <div class="row">
+        @foreach (HydraulicSystemDto hydraulicSystem in Model.hydraulicSystems)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    <img src="@hydraulicSystem.ImageUrl" alt="@hydraulicSystem.partName" class="card-img-top" style="max-height: 200px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@hydraulicSystem.partName</h5>
+                        <a asp-action="Details" asp-route-id="@hydraulicSystem.Id" class="btn btn-primary">Details</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Delete" asp-route-id="@hydraulicSystem.Id" class="btn custom-red">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@hydraulicSystem.Id" class="btn custom-black">Edit</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@if (Model.TotalPages > 0 || User.IsInRole("Admin"))
+{
+    <div class="d-flex justify-content-between align-items-center mt-4">
+
+        <div>
+            <a asp-action="Index"
+               asp-route-SearchQuery="@Model.SearchQuery"
+               asp-route-CurrentPage="@(Model.CurrentPage > 1 ? Model.CurrentPage - 1 : 1)"
+               class="btn btn-secondary @(Model.CurrentPage == 1 ? "disabled" : "")">
+                Previous
+            </a>
+
+            <a asp-action="Index"
+               asp-route-SearchQuery="@Model.SearchQuery"
+               asp-route-CurrentPage="@(Model.CurrentPage < Model.TotalPages ? Model.CurrentPage + 1 : Model.TotalPages)"
+               class="btn btn-secondary @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                Next
+            </a>
+        </div>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Create" class="btn btn-primary">Add New HydraulicPart</a>
+        }
+
+    </div>
+}
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

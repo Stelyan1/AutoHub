@@ -34,14 +34,15 @@ namespace AutoHub.Controllers
 
             if (!string.IsNullOrEmpty(searchQuery))
             {
-                models = models.Where(b => b.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
+                models = models.Where(m => m.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
             }
-
+           
             int entitiesPerPage = 3;
             int totalBrands = models.Count();
             var pagedBrands = models.Skip((currentPage - 1) * entitiesPerPage)
                                     .Take(entitiesPerPage);
 
+            
 
             var viewModel = new SearchPagination
             {
