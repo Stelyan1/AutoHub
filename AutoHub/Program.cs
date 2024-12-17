@@ -12,6 +12,7 @@ namespace AutoHub
     using AutoHub.Infrastructure.Services.Interfaces;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using System;
@@ -23,7 +24,20 @@ namespace AutoHub
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            //Secure against CSRF by adding global validation
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
+            //Prevent Session Hijacking and AutoForgery
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                            .AddCookie(options =>
+                            {
+                                options.Cookie.HttpOnly = true;
+                                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                                options.Cookie.SameSite = SameSiteMode.Strict;
+                            });
 
             builder.Services.AddDbContext<AutoHubDbContext>(options =>
             {
