@@ -23,7 +23,7 @@ namespace AutoHub.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string? searchQuery, int currentPage = 1)
+        public async Task<IActionResult> Index(string? searchQuery, string? selectedBrand, int currentPage = 1)
         {
             var gearboxes = await _gearboxService.GetAllGearboxesAsync();
 
@@ -31,6 +31,7 @@ namespace AutoHub.Controllers
             {
                 gearboxes = gearboxes.Where(g => g.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
             }
+
 
             int entitiesPerPage = 3;
             int totalBrands = gearboxes.Count();

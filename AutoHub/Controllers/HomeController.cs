@@ -45,5 +45,10 @@ namespace AutoHub.Controllers
 
             return View("Error500");
         }
+
+        public IActionResult Test500()
+        {
+            throw new ArgumentException();
+        }
     }
 }

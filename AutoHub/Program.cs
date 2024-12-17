@@ -103,7 +103,7 @@ namespace AutoHub
 
             //// Configure the HTTP request pipeline.
             //// Configure Error pages and handling.
-            if (!app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();

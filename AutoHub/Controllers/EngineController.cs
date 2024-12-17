@@ -26,23 +26,30 @@ namespace AutoHub.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string? searchQuery, int currentPage = 1)
+        public async Task<IActionResult> Index(string? searchQuery, string? selectedBrand, int currentPage = 1)
         {
             var engines = await _engineService.GetAllEnginesAsync();
 
             if (!string.IsNullOrEmpty(searchQuery))
             {
-                engines = engines.Where(b => b.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
+                engines = engines.Where(e => e.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
             }
 
+            if (!string.IsNullOrEmpty(selectedBrand))
+            {
+                engines = engines.Where(e => e.BrandId.ToString() == selectedBrand);
+            }
+
+            var brands = await _brandRepository.GetAllAsync();
+
             int entitiesPerPage = 3;
-            int totalBrands = engines.Count();
-            var pagedBrands = engines.Skip((currentPage - 1) * entitiesPerPage)
+            int totalEngines = engines.Count();
+            var pagedEngines = engines.Skip((currentPage - 1) * entitiesPerPage)
                                     .Take(entitiesPerPage);
 
             var viewModel = new SearchPagination
             {
-                Engines = pagedBrands.Select(e => new EngineDto
+                Engines = pagedEngines.Select(e => new EngineDto
                 {
                     Id = e.Id,
                     Name = e.Name,
@@ -59,9 +66,15 @@ namespace AutoHub.Controllers
                     ImageUrl = e.ImageUrl
                 }),
                 SearchQuery = searchQuery,
+                SelectedBrand = selectedBrand,
                 CurrentPage = currentPage,
+                Brands = brands.Select(b => new BrandDto
+                {
+                    Id = b.Id,
+                    Name = b.Name
+                }),
                 EntitiesPerPage = entitiesPerPage,
-                TotalPages = (int)Math.Ceiling((double)totalBrands / entitiesPerPage),
+                TotalPages = (int)Math.Ceiling((double)totalEngines / entitiesPerPage),
             };
             return View(viewModel);
         }

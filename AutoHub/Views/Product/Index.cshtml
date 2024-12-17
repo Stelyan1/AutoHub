@@ -25,11 +25,24 @@
 
 <h2 class="text-center">All Products</h2>
 
-<form method="get">
-    <div class="mb-3">
-        <input type="text" name="SearchQuery" value="@Model.SearchQuery" class="form-control" placeholder="Search by product name..." />
+<form method="get" asp-action="Index" class="mb-4">
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="SearchQuery">Search by Product name</label>
+                <input asp-for="SearchQuery" class="form-control" placeholder="Search by product name..." />
+
+                <label asp-for="SelectedCategory">Search by Brand</label>
+                @Html.DropDownListFor(model => model.SelectedCategory,
+                         new SelectList(Model.Categories, "Id", "Name", Model.SelectedCategory),
+                         "Select a category", new { @class = "form-control" })
+
+                <span asp-validation-for="SelectedCategory"></span>
+            </div>
+        </div>
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
+    <a asp-action="Index" type="submit" class="btn btn-primary">Reset</a>
 </form>
 
 <div class="container">

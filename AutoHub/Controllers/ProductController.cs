@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using static AutoHub.Common.EntityValidationConstants;
+using Category = AutoHub.Data.Models.Category;
 
 namespace AutoHub.Controllers
 {
@@ -28,7 +29,7 @@ namespace AutoHub.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Index(string? searchQuery, int currentPage = 1) 
+        public async Task<IActionResult> Index(string? searchQuery, string? selectedCategory, int currentPage = 1) 
         {
             var products = await _productService.GetAllProductsAsync(GetSellerId());
             var categories = await _categoryRepository.GetAllAsync();
@@ -36,6 +37,11 @@ namespace AutoHub.Controllers
             if (!string.IsNullOrEmpty(searchQuery))
             {
                 products = products.Where(p => p.ProductName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (!string.IsNullOrEmpty(selectedCategory))
+            {
+                products = products.Where(p => p.CategoryId.ToString() == selectedCategory);
             }
 
             int entitiesPerPage = 3;
@@ -59,7 +65,13 @@ namespace AutoHub.Controllers
                     HasBought = p.HasBought
                 }),
                 SearchQuery = searchQuery,
+                SelectedCategory = selectedCategory,
                 CurrentPage = currentPage,
+                Categories = categories.Select(c => new CategoryDto
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                }),
                 EntitiesPerPage = entitiesPerPage,
                 TotalPages = (int)Math.Ceiling((double)totalBrands / entitiesPerPage),
             };

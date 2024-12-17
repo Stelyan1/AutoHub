@@ -1,4 +1,5 @@
-﻿using AutoHub.Infrastructure.DTOs;
+﻿using AutoHub.Data.Models;
+using AutoHub.Infrastructure.DTOs;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,8 @@ namespace AutoHub.Infrastructure.Models
     public class SearchPagination
     {
         public string? SearchQuery { get; set; }
-
+        public string? SelectedBrand { get; set; }
+        public string? SelectedCategory { get; set; }
         public int CurrentPage { get; set; } = 1;
         public int EntitiesPerPage = 3;
         public int TotalItems { get; set; }
@@ -23,6 +25,7 @@ namespace AutoHub.Infrastructure.Models
         public IEnumerable<EngineDto> Engines { get; set; } = new List<EngineDto>();
         public IEnumerable<GearboxDto> GearBoxes { get; set; } = new List<GearboxDto>();
         public IEnumerable<ProductDto> Products { get; set; } = new List<ProductDto>();
+        public IEnumerable<CategoryDto> Categories { get; set; } = new List<CategoryDto>(); 
         public IEnumerable<HydraulicSystemDto> hydraulicSystems { get; set; } = new List<HydraulicSystemDto>();
     }
 }
