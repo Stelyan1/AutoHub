@@ -33,10 +33,15 @@ Admin Dashboard
 2.Admins can create,edit and delete brands,models,parts and products in marketplace.
 
 🛠️ Built With
+
 Frontend: HTML
+
 Backend: C# with ASP.Net Core 
+
 Database: MSSQL(Microsoft SQL Server)
+
 Authentication: ASP.Net Identity
 
 🏗️ Future Improvements
+
 Chat feature for buyers and sellers.
